@@ -307,9 +307,11 @@ fu! s:hide_noise(action) abort "{{{2
         syn clear helpHyperTextEntry
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar conceal
+        echo '[hide noise] ON'
     else
         syn clear helpHyperTextEntry
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar
+        echo '[hide noise] OFF'
     endif
 endfu
