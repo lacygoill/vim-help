@@ -36,8 +36,8 @@ nno <buffer> <nowait> <silent> ]h    :<c-u>exe <sid>main('hypertext', ']h', 1)<c
 
 "                               ┌─ setting (can't use `o`: it would prevent us from typing `[oP`)
 "                               │
-nno <buffer> <nowait> <silent> [s    :<c-u>exe <sid>main('option', '[o', 0)<cr>
-nno <buffer> <nowait> <silent> ]s    :<c-u>exe <sid>main('option', ']o', 1)<cr>
+nno <buffer> <nowait> <silent> [s    :<c-u>exe <sid>main('option', '[s', 0)<cr>
+nno <buffer> <nowait> <silent> ]s    :<c-u>exe <sid>main('option', ']s', 1)<cr>
 
 nno <buffer> <nowait> <silent> <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
                                        \<bar> sil! aug! my_help_close_preview_window<cr>
