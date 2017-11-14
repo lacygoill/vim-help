@@ -125,7 +125,7 @@ if exists('*s:main')
 endif
 
 fu! s:has_right_syntax() abort "{{{2
-    return index(s:keyword2syntax[s:keyword], s:syntax_under_cursor()) != -1
+    return index(s:keyword2syntax[s:keyword], s:syntax_under_cursor()) >= 0
 endfu
 
 fu! s:highlight_tag() abort "{{{2
@@ -152,7 +152,7 @@ fu! s:main(keyword, lhs, fwd) abort "{{{2
             return ''
         endif
 
-        if index(['command', 'example'], a:keyword) != -1 || !get(s:, 'my_auto_preview', 0)
+        if index(['command', 'example'], a:keyword) >= 0 || !get(s:, 'my_auto_preview', 0)
             return ''
         endif
 
