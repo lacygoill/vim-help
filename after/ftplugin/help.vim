@@ -85,7 +85,7 @@ let s:keyword2syntax = {
 let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
                     \ ."
-                    \   setl cocu< cole< kp<
+                    \   setl cocu< cole< isk< kp< ts<
                     \|  exe 'nunmap <buffer> [ob'
                     \|  exe 'nunmap <buffer> ]ob'
                     \|  exe 'nunmap <buffer> cob'
@@ -108,7 +108,6 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'nunmap <buffer> ]s'
                     \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'au!  my_help * <buffer>'
-                    \|  exe 'aug! my_help'
                     \  "
 
 " Functions {{{1
