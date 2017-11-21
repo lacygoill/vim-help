@@ -1,9 +1,3 @@
-" NO GUARD
-" otherwise our ftplugin would never be sourced, because a previous
-" ftplugin already set the variable `b:did_ftplugin` (hit `gF`):
-"
-"         $VIMRUNTIME/ftplugin/help.vim:9
-
 " Mappings {{{1
 
 nno <buffer> <nowait> <silent> [ob   :<c-u>call help#hide_noise('enable')<cr>
