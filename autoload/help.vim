@@ -148,7 +148,7 @@ fu! s:teardown_auto_preview() abort "{{{2
         "              ┌─ if we use `<buffer>`, the preview window wouldn't be
         "              │  closed when we hit Enter on a tag, because `CursorMoved`
         "              │  would occur in the new buffer;
-        "              │  if the tag is defined in another file
+        "              │  if the tag is defined in another file
         "              │
         au CursorMoved * pclose
                       \| wincmd _
