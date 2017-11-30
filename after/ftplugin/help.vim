@@ -86,4 +86,3 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'au!  my_help * <buffer>'
                     \  "
-
