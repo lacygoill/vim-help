@@ -1,6 +1,33 @@
 " Functions {{{1
+fu! help#auto_preview(action) abort "{{{2
+    if a:action ==# 'is_active'
+        return get(s:, 'my_auto_preview', 0) == 1
+    else
+        let s:my_auto_preview = a:action ==# 'enable' ? 1 : 0
+    endif
+    echo '[auto-preview] '.(s:my_auto_preview ? 'ON' : 'OFF')
+endfu
+
 fu! s:has_right_syntax() abort "{{{2
     return index(s:keyword2syntax[s:keyword], s:syntax_under_cursor()) >= 0
+endfu
+
+fu! help#hide_noise(action) abort "{{{2
+    if a:action ==# 'is_active'
+        return match(execute('syn list helpHyperTextEntry'), 'conceal') != -1
+    elseif a:action ==# 'enable'
+        " The name of the syntax item `helpHyperTextEntry` was found with
+        " `zS`. Its definition was found with `:Verbose syn list helpHyperTextEntry`.
+        syn clear helpHyperTextEntry
+        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
+        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar conceal
+        echo '[hide noise] ON'
+    else
+        syn clear helpHyperTextEntry
+        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar
+        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar
+        echo '[hide noise] OFF'
+    endif
 endfu
 
 fu! s:highlight_tag() abort "{{{2
@@ -157,33 +184,6 @@ fu! s:teardown_auto_preview() abort "{{{2
                       " after closing the preview window, the help window isn't maximized
                       " anymore, therefore we execute `wincmd _`
     augroup END
-endfu
-
-fu! help#auto_preview(action) abort "{{{2
-    if a:action ==# 'is_active'
-        return get(s:, 'my_auto_preview', 0) == 1
-    else
-        let s:my_auto_preview = a:action ==# 'enable' ? 1 : 0
-    endif
-    echo '[auto-preview] '.(s:my_auto_preview ? 'ON' : 'OFF')
-endfu
-
-fu! help#hide_noise(action) abort "{{{2
-    if a:action ==# 'is_active'
-        return match(execute('syn list helpHyperTextEntry'), 'conceal') != -1
-    elseif a:action ==# 'enable'
-        " The name of the syntax item `helpHyperTextEntry` was found with
-        " `zS`. Its definition was found with `:Verbose syn list helpHyperTextEntry`.
-        syn clear helpHyperTextEntry
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar conceal
-        echo '[hide noise] ON'
-    else
-        syn clear helpHyperTextEntry
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar
-        echo '[hide noise] OFF'
-    endif
 endfu
 
 " Variables {{{1
