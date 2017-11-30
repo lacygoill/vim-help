@@ -14,7 +14,8 @@ endfu
 
 fu! help#hide_noise(action) abort "{{{2
     if a:action ==# 'is_active'
-        return match(execute('syn list helpHyperTextEntry'), 'conceal') != -1
+        return stridx(execute('syn list helpHyperTextEntry'), 'conceal') != -1
+
     elseif a:action ==# 'enable'
         " The name of the syntax item `helpHyperTextEntry` was found with
         " `zS`. Its definition was found with `:Verbose syn list helpHyperTextEntry`.
@@ -22,6 +23,7 @@ fu! help#hide_noise(action) abort "{{{2
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar conceal
         echo '[hide noise] ON'
+
     else
         syn clear helpHyperTextEntry
         syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar
