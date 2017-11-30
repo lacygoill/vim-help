@@ -12,26 +12,6 @@ fu! s:has_right_syntax() abort "{{{2
     return index(s:keyword2syntax[s:keyword], s:syntax_under_cursor()) >= 0
 endfu
 
-fu! help#hide_noise(action) abort "{{{2
-    if a:action ==# 'is_active'
-        return stridx(execute('syn list helpHyperTextEntry'), 'conceal') != -1
-
-    elseif a:action ==# 'enable'
-        " The name of the syntax item `helpHyperTextEntry` was found with
-        " `zS`. Its definition was found with `:Verbose syn list helpHyperTextEntry`.
-        syn clear helpHyperTextEntry
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar conceal
-        echo '[hide noise] ON'
-
-    else
-        syn clear helpHyperTextEntry
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar
-        syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/ contains=helpStar
-        echo '[hide noise] OFF'
-    endif
-endfu
-
 fu! s:highlight_tag() abort "{{{2
     " go to preview window
     wincmd P

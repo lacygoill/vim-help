@@ -1,10 +1,5 @@
 " Mappings {{{1
 
-nno <buffer> <nowait> <silent> [ob   :<c-u>call help#hide_noise('enable')<cr>
-nno <buffer> <nowait> <silent> ]ob   :<c-u>call help#hide_noise('disable')<cr>
-nno <buffer> <nowait> <silent> cob   :<c-u>call help#hide_noise(help#hide_noise('is_active')
-                                     \? 'disable' : 'enable')<cr>
-
 nno <buffer> <nowait> <silent> [oP   :<c-u>call help#auto_preview('enable')<cr>
 nno <buffer> <nowait> <silent> ]oP   :<c-u>call help#auto_preview('disable')<cr>
 nno <buffer> <nowait> <silent> coP   :<c-u>call help#auto_preview(help#auto_preview('is_active')
@@ -63,9 +58,6 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
                     \ ."
                     \   setl cocu< cole< isk< kp< ts<
-                    \|  exe 'nunmap <buffer> [ob'
-                    \|  exe 'nunmap <buffer> ]ob'
-                    \|  exe 'nunmap <buffer> cob'
                     \|  exe 'nunmap <buffer> [oP'
                     \|  exe 'nunmap <buffer> ]oP'
                     \|  exe 'nunmap <buffer> coP'
