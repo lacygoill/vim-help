@@ -1,34 +1,34 @@
 " Mappings {{{1
 
-nno <buffer> <nowait> <silent> [oP   :<c-u>call help#auto_preview('enable')<cr>
-nno <buffer> <nowait> <silent> ]oP   :<c-u>call help#auto_preview('disable')<cr>
-nno <buffer> <nowait> <silent> coP   :<c-u>call help#auto_preview(help#auto_preview('is_active')
-                                     \? 'disable' : 'enable')<cr>
+nno  <buffer><nowait><silent>  [oP  :<c-u>call help#auto_preview('enable')<cr>
+nno  <buffer><nowait><silent>  ]oP  :<c-u>call help#auto_preview('disable')<cr>
+nno  <buffer><nowait><silent>  coP  :<c-u>call help#auto_preview(help#auto_preview('is_active')
+                                    \? 'disable' : 'enable')<cr>
 
 " avoid error `E21` when hitting `p` by accident
-nno <buffer> <nowait> <silent> p     <nop>
-xno <buffer> <nowait> <silent> p     <nop>
-nno <buffer> <nowait> <silent> q     :<c-u>exe my_lib#quit()<cr>
-nno <buffer> <nowait> <silent> u     <nop>
+nno  <buffer><nowait><silent>  p  <nop>
+xno  <buffer><nowait><silent>  p  <nop>
+nno  <buffer><nowait><silent>  q  :<c-u>exe my_lib#quit()<cr>
+nno  <buffer><nowait><silent>  u  <nop>
 
-nno <buffer> <nowait> <silent> <cr>  <c-]>
-nno <buffer> <nowait> <silent> <BS>  <c-t>
+nno  <buffer><nowait><silent>  <cr>  <c-]>
+nno  <buffer><nowait><silent>  <BS>  <c-t>
 
-nno <buffer> <nowait> <silent> [c    :<c-u>exe help#main('command', '[c', 0)<cr>
-nno <buffer> <nowait> <silent> ]c    :<c-u>exe help#main('command', ']c', 1)<cr>
+nno  <buffer><nowait><silent>  [c  :<c-u>exe help#main('command', '[c', 0)<cr>
+nno  <buffer><nowait><silent>  ]c  :<c-u>exe help#main('command', ']c', 1)<cr>
 
-nno <buffer> <nowait> <silent> [e    :<c-u>exe help#main('example', '[e', 0)<cr>
-nno <buffer> <nowait> <silent> ]e    :<c-u>exe help#main('example', ']e', 1)<cr>
+nno  <buffer><nowait><silent>  [e  :<c-u>exe help#main('example', '[e', 0)<cr>
+nno  <buffer><nowait><silent>  ]e  :<c-u>exe help#main('example', ']e', 1)<cr>
 
-nno <buffer> <nowait> <silent> [h    :<c-u>exe help#main('hypertext', '[h', 0)<cr>
-nno <buffer> <nowait> <silent> ]h    :<c-u>exe help#main('hypertext', ']h', 1)<cr>
+nno  <buffer><nowait><silent>  [h  :<c-u>exe help#main('hypertext', '[h', 0)<cr>
+nno  <buffer><nowait><silent>  ]h  :<c-u>exe help#main('hypertext', ']h', 1)<cr>
 
-"                               ┌─ setting (can't use `o`: it would prevent us from typing `[oP`)
-"                               │
-nno <buffer> <nowait> <silent> [s    :<c-u>exe help#main('option', '[s', 0)<cr>
-nno <buffer> <nowait> <silent> ]s    :<c-u>exe help#main('option', ']s', 1)<cr>
+"                              ┌─ setting (can't use `o`: it would prevent us from typing `[oP`)
+"                              │
+nno  <buffer><nowait><silent> [s  :<c-u>exe help#main('option', '[s', 0)<cr>
+nno  <buffer><nowait><silent> ]s  :<c-u>exe help#main('option', ']s', 1)<cr>
 
-nno <buffer> <nowait> <silent> <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
+nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
                                        \<bar> sil! aug! my_help_close_preview_window<cr>
                                        \<c-w>P
 
