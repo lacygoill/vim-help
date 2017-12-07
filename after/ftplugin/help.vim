@@ -12,7 +12,7 @@ nno  <buffer><nowait><silent>  q  :<c-u>exe my_lib#quit()<cr>
 nno  <buffer><nowait><silent>  u  <nop>
 
 nno  <buffer><nowait><silent>  <cr>  <c-]>
-nno  <buffer><nowait><silent>  <BS>  <c-t>
+nno  <buffer><nowait><silent>  <bs>  <c-t>
 
 nno  <buffer><nowait><silent>  [c  :<c-u>exe help#main('command', '[c', 0)<cr>
 nno  <buffer><nowait><silent>  ]c  :<c-u>exe help#main('command', ']c', 1)<cr>

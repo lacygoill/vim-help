@@ -22,6 +22,8 @@ fu! s:highlight_tag() abort "{{{2
         endif
         let pattern = '\v%'.line('.').'l%'.col('.').'c\S+'
         let w:my_preview_tag = matchadd('IncSearch', pattern)
+        " make sure there's no conceal so that we see the tag
+        let &l:cole = 0
     endif
     " back to original window
     wincmd p
@@ -77,11 +79,11 @@ fu! s:open_preview() abort "{{{2
     elseif s:keyword ==# 'hypertext'
         let ident = matchstr(expand('<cWORD>'), '\v.{-}\|\zs.{-1,}\ze\|.*')
     else
-        return
+        return 0
     endif
 
     if empty(ident)
-        return
+        return 0
     endif
 
     try
