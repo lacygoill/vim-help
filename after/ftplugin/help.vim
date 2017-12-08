@@ -14,19 +14,19 @@ nno  <buffer><nowait><silent>  u  <nop>
 nno  <buffer><nowait><silent>  <cr>  <c-]>
 nno  <buffer><nowait><silent>  <bs>  <c-t>
 
-nno  <buffer><nowait><silent>  [c  :<c-u>exe help#main('command', '[c', 0)<cr>
-nno  <buffer><nowait><silent>  ]c  :<c-u>exe help#main('command', ']c', 1)<cr>
+nno  <buffer><nowait><silent>  [c  :<c-u>call help#main('command', '[c', 0)<cr>
+nno  <buffer><nowait><silent>  ]c  :<c-u>call help#main('command', ']c', 1)<cr>
 
-nno  <buffer><nowait><silent>  [e  :<c-u>exe help#main('example', '[e', 0)<cr>
-nno  <buffer><nowait><silent>  ]e  :<c-u>exe help#main('example', ']e', 1)<cr>
+nno  <buffer><nowait><silent>  [e  :<c-u>call help#main('example', '[e', 0)<cr>
+nno  <buffer><nowait><silent>  ]e  :<c-u>call help#main('example', ']e', 1)<cr>
 
-nno  <buffer><nowait><silent>  [h  :<c-u>exe help#main('hypertext', '[h', 0)<cr>
-nno  <buffer><nowait><silent>  ]h  :<c-u>exe help#main('hypertext', ']h', 1)<cr>
+nno  <buffer><nowait><silent>  [h  :<c-u>call help#main('hypertext', '[h', 0)<cr>
+nno  <buffer><nowait><silent>  ]h  :<c-u>call help#main('hypertext', ']h', 1)<cr>
 
 "                              ┌─ setting (can't use `o`: it would prevent us from typing `[oP`)
 "                              │
-nno  <buffer><nowait><silent> [s  :<c-u>exe help#main('option', '[s', 0)<cr>
-nno  <buffer><nowait><silent> ]s  :<c-u>exe help#main('option', ']s', 1)<cr>
+nno  <buffer><nowait><silent> [s  :<c-u>call help#main('option', '[s', 0)<cr>
+nno  <buffer><nowait><silent> ]s  :<c-u>call help#main('option', ']s', 1)<cr>
 
 nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
                                        \<bar> sil! aug! my_help_close_preview_window<cr>

@@ -66,9 +66,8 @@ fu! help#main(keyword, lhs, fwd) abort "{{{2
         call timer_start(0, { -> s:teardown_auto_preview() })
 
     catch
-        return 'echoerr '.string(v:exception)
+        exe my_lib#catch_error()
     endtry
-    return ''
 endfu
 
 fu! s:open_preview() abort "{{{2
@@ -122,12 +121,7 @@ fu! s:open_preview() abort "{{{2
         "}}}
         exe "norm! \<c-w>}"
     catch
-        echohl ErrorMsg
-        " ┌─ in case of an error, this will just display the message
-        " │  it won't raise a real error (stack trace, abort function…)
-        " │
-        echo v:exception
-        echohl NONE
+        exe my_lib#catch_error()
         return 0
     endtry
     return 1
