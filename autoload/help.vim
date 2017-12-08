@@ -35,7 +35,7 @@ fu! help#main(keyword, lhs, fwd) abort "{{{2
 
         " try to position the cursor on the next relevant tag
         if !s:search_tag(a:keyword, a:lhs, a:fwd)
-            return ''
+            return
         endif
 
         if index(['command', 'example'], a:keyword) >= 0 || !get(s:, 'my_auto_preview', 0)
@@ -50,7 +50,7 @@ fu! help#main(keyword, lhs, fwd) abort "{{{2
         "                 k$
         "                 ]h
         if !s:open_preview()
-            return ''
+            return
         endif
 
         call s:highlight_tag()
