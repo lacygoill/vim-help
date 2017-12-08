@@ -66,7 +66,7 @@ fu! help#main(keyword, lhs, fwd) abort "{{{2
         call timer_start(0, { -> s:teardown_auto_preview() })
 
     catch
-        call my_lib#catch_error()
+        return my_lib#catch_error()
     endtry
 endfu
 
