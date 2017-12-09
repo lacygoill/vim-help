@@ -14,7 +14,7 @@ endfu
 
 fu! s:highlight_tag() abort "{{{2
     " go to preview window
-    wincmd P
+    noa wincmd P
     " check we're there
     if &l:pvw
         if exists('w:my_preview_tag')
@@ -26,7 +26,7 @@ fu! s:highlight_tag() abort "{{{2
         let &l:cole = 0
     endif
     " back to original window
-    wincmd p
+    noa wincmd p
 endfu
 
 fu! help#main(keyword, lhs, fwd) abort "{{{2
