@@ -66,7 +66,7 @@ fu! help#main(keyword, lhs, fwd) abort "{{{2
         call timer_start(0, { -> s:teardown_auto_preview() })
 
     catch
-        return my_lib#catch_error()
+        return lg#catch_error()
     endtry
 endfu
 
@@ -121,7 +121,7 @@ fu! s:open_preview() abort "{{{2
         "}}}
         exe "norm! \<c-w>}"
     catch
-        call my_lib#catch_error()
+        call lg#catch_error()
         return 0
     endtry
     return 1
