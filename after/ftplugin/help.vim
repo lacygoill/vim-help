@@ -8,7 +8,7 @@ nno  <buffer><nowait><silent>  coP  :<c-u>call help#auto_preview(help#auto_previ
 " avoid error `E21` when hitting `p` by accident
 nno  <buffer><nowait><silent>  p  <nop>
 xno  <buffer><nowait><silent>  p  <nop>
-nno  <buffer><nowait><silent>  q  :<c-u>call lg#quit()<cr>
+nno  <buffer><nowait><silent>  q  :<c-u>call lg#window#quit()<cr>
 nno  <buffer><nowait><silent>  u  <nop>
 
 nno  <buffer><nowait><silent>  <cr>  <c-]>
