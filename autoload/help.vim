@@ -29,12 +29,12 @@ fu! s:highlight_tag() abort "{{{2
     noautocmd wincmd p
 endfu
 
-fu! help#main(keyword, lhs, fwd) abort "{{{2
+fu! help#main(keyword, lhs, is_fwd) abort "{{{2
     try
         let s:keyword = a:keyword
 
         " try to position the cursor on the next relevant tag
-        if !s:search_tag(a:keyword, a:lhs, a:fwd)
+        if !s:search_tag(a:keyword, a:lhs, a:is_fwd)
             return
         endif
 
@@ -127,11 +127,11 @@ fu! s:open_preview() abort "{{{2
     return 1
 endfu
 
-fu! s:search_tag(keyword, lhs, fwd) abort "{{{2
+fu! s:search_tag(keyword, lhs, is_fwd) abort "{{{2
     let g:motion_to_repeat = a:lhs
 
     let pattern = s:keyword2pattern[a:keyword]
-    let flags   = (a:fwd ? '' : 'b').'W'
+    let flags   = (a:is_fwd ? '' : 'b').'W'
 
     let orig_pos = getcurpos()
     let find_sth = search(pattern, flags)
