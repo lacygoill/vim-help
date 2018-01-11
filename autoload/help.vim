@@ -1,3 +1,8 @@
+if exists('g:autoloaded_help')
+    finish
+endif
+let g:autoloaded_help = 1
+
 " Functions {{{1
 fu! help#auto_preview(action) abort "{{{2
     if a:action ==# 'is_active'
