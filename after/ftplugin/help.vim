@@ -14,19 +14,38 @@ nno  <buffer><nowait><silent>  u  <nop>
 nno  <buffer><nowait><silent>  <cr>  <c-]>
 nno  <buffer><nowait><silent>  <bs>  <c-t>
 
-nno  <buffer><nowait><silent>  [c  :<c-u>call help#main('command', '[c', 0)<cr>
-nno  <buffer><nowait><silent>  ]c  :<c-u>call help#main('command', ']c', 1)<cr>
 
-nno  <buffer><nowait><silent>  [e  :<c-u>call help#main('example', '[e', 0)<cr>
-nno  <buffer><nowait><silent>  ]e  :<c-u>call help#main('example', ']e', 1)<cr>
+noremap  <buffer><expr><nowait><silent>  [c  help#bracket_rhs('command', 0)
+noremap  <buffer><expr><nowait><silent>  ]c  help#bracket_rhs('command', 1)
 
-nno  <buffer><nowait><silent>  [h  :<c-u>call help#main('hypertext', '[h', 0)<cr>
-nno  <buffer><nowait><silent>  ]h  :<c-u>call help#main('hypertext', ']h', 1)<cr>
+noremap  <buffer><expr><nowait><silent>  [e  help#bracket_rhs('example', 0)
+noremap  <buffer><expr><nowait><silent>  ]e  help#bracket_rhs('example', 1)
 
-"                              ┌─ setting (can't use `o`: it would prevent us from typing `[oP`)
-"                              │
-nno  <buffer><nowait><silent> [s  :<c-u>call help#main('option', '[s', 0)<cr>
-nno  <buffer><nowait><silent> ]s  :<c-u>call help#main('option', ']s', 1)<cr>
+noremap  <buffer><expr><nowait><silent>  [h  help#bracket_rhs('hypertext', 0)
+noremap  <buffer><expr><nowait><silent>  ]h  help#bracket_rhs('hypertext', 1)
+
+noremap  <buffer><expr><nowait><silent>  [O  help#bracket_rhs('option', 0)
+noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
+"                                         │
+"                                         └  can't use `o`:
+"                                                it would prevent us from typing `[oP`
+
+noremap  <buffer><silent>  <plug>(help-bracket-motion)  :<c-u>call help#bracket_motion()<cr>
+
+try
+    call lg#motion#main#make_repeatable({
+    \        'mode': '',
+    \        'buffer': 1,
+    \        'motions': [
+    \                     { 'bwd': '[c',  'fwd': ']c',  'axis': 1, },
+    \                     { 'bwd': '[e',  'fwd': ']e',  'axis': 1, },
+    \                     { 'bwd': '[h',  'fwd': ']h',  'axis': 1, },
+    \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
+    \                   ]
+    \ })
+catch
+    unsilent call lg#catch_error()
+endtry
 
 nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
                                        \<bar> sil! aug! my_help_close_preview_window<cr>
@@ -67,14 +86,14 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'nunmap <buffer> u'
                     \|  exe 'nunmap <buffer> <cr>'
                     \|  exe 'nunmap <buffer> <bs>'
-                    \|  exe 'nunmap <buffer> [c'
-                    \|  exe 'nunmap <buffer> ]c'
-                    \|  exe 'nunmap <buffer> [e'
-                    \|  exe 'nunmap <buffer> ]e'
-                    \|  exe 'nunmap <buffer> [h'
-                    \|  exe 'nunmap <buffer> ]h'
-                    \|  exe 'nunmap <buffer> [s'
-                    \|  exe 'nunmap <buffer> ]s'
+                    \|  exe 'unmap <buffer> [c'
+                    \|  exe 'unmap <buffer> ]c'
+                    \|  exe 'unmap <buffer> [e'
+                    \|  exe 'unmap <buffer> ]e'
+                    \|  exe 'unmap <buffer> [h'
+                    \|  exe 'unmap <buffer> ]h'
+                    \|  exe 'unmap <buffer> [O'
+                    \|  exe 'unmap <buffer> ]O'
                     \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'au!  my_help * <buffer>'
                     \  "

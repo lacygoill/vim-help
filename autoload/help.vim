@@ -13,37 +13,61 @@ fu! help#auto_preview(action) abort "{{{2
     echo '[auto-preview] '.(s:my_auto_preview ? 'ON' : 'OFF')
 endfu
 
-fu! s:has_right_syntax() abort "{{{2
-    return index(s:keyword2syntax[s:keyword], s:syntax_under_cursor()) >= 0
+fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
+    let mode = mode(1)
+
+    let seq = "\<plug>(help-bracket-motion)"
+
+    let seq .= (a:is_fwd ? "\u2001" : "\u2000")
+    \
+    \         .{ 'n':      "\u2001",
+    \            'v':      "\u2002",
+    \            'V':      "\u2002",
+    \            "\<c-v>": "\u2002",
+    \            'o':      "\u2003" }[mode]
+    \
+    \         .{ 'command':   "\u2001",
+    \            'example':   "\u2002",
+    \            'hypertext': "\u2003",
+    \            'option':    "\u2004", }[a:kwd]
+    \
+    \         ."\<cr>"
+
+    call feedkeys(seq, 'i')
+    return ''
 endfu
 
-fu! s:highlight_tag() abort "{{{2
-    " go to preview window
-    noautocmd wincmd P
-    " check we're there
-    if &l:pvw
-        if exists('w:my_preview_tag')
-            call matchdelete(w:my_preview_tag)
-        endif
-        let pattern = '\v%'.line('.').'l%'.col('.').'c\S+'
-        let w:my_preview_tag = matchadd('IncSearch', pattern)
-        " make sure there's no conceal so that we see the tag
-        let &l:cole = 0
-    endif
-    " back to original window
-    noautocmd wincmd p
-endfu
-
-fu! help#main(keyword, lhs, is_fwd) abort "{{{2
+fu! help#bracket_motion() abort "{{{2
     try
-        let s:keyword = a:keyword
+        let args = split(input(''), '\zs')
+
+        let is_fwd = args[0] ==# "\u2001" ? 1 : 0
+
+        let mode = {
+        \            "\u2001": 'n',
+        \            "\u2002": 'v',
+        \            "\u2003": 'o',
+        \          }[args[1]]
+
+        let kwd = {
+        \           "\ u2001": 'command',
+        \           "\u2002": 'example',
+        \           "\u2003": 'hypertext',
+        \           "\u2004": 'option',
+        \         }[args[2]]
+
+        let s:kwd = kwd
+
+        if mode ==# 'v'
+            norm! gv
+        endif
 
         " try to position the cursor on the next relevant tag
-        if !s:search_tag(a:keyword, a:lhs, a:is_fwd)
+        if !s:search_tag(kwd, is_fwd)
             return
         endif
 
-        if index(['command', 'example'], a:keyword) >= 0 || !get(s:, 'my_auto_preview', 0)
+        if index(['command', 'example'], kwd) >= 0 || !get(s:, 'my_auto_preview', 0)
             return ''
         endif
 
@@ -75,12 +99,33 @@ fu! help#main(keyword, lhs, is_fwd) abort "{{{2
     endtry
 endfu
 
+fu! s:has_right_syntax() abort "{{{2
+    return index(s:keyword2syntax[s:kwd], s:syntax_under_cursor()) >= 0
+endfu
+
+fu! s:highlight_tag() abort "{{{2
+    " go to preview window
+    noautocmd wincmd P
+    " check we're there
+    if &l:pvw
+        if exists('w:my_preview_tag')
+            call matchdelete(w:my_preview_tag)
+        endif
+        let pat = '\v%'.line('.').'l%'.col('.').'c\S+'
+        let w:my_preview_tag = matchadd('IncSearch', pat)
+        " make sure there's no conceal so that we see the tag
+        let &l:cole = 0
+    endif
+    " back to original window
+    noautocmd wincmd p
+endfu
+
 fu! s:open_preview() abort "{{{2
-    if s:keyword ==# 'option'
+    if s:kwd ==# 'option'
         " sometimes option names are followed by punctuation
         " characters which aren't a part of the tag name
         let ident = matchstr(expand('<cword>'), "'.\\{-}'")
-    elseif s:keyword ==# 'hypertext'
+    elseif s:kwd ==# 'hypertext'
         let ident = matchstr(expand('<cWORD>'), '\v.{-}\|\zs.{-1,}\ze\|.*')
     else
         return 0
@@ -132,19 +177,17 @@ fu! s:open_preview() abort "{{{2
     return 1
 endfu
 
-fu! s:search_tag(keyword, lhs, is_fwd) abort "{{{2
-    let g:motion_to_repeat = a:lhs
-
-    let pattern = s:keyword2pattern[a:keyword]
-    let flags   = (a:is_fwd ? '' : 'b').'W'
+fu! s:search_tag(kwd, is_fwd) abort "{{{2
+    let pat = s:keyword2pattern[a:kwd]
+    let flags = (a:is_fwd ? '' : 'b').'W'
 
     let orig_pos = getcurpos()
-    let find_sth = search(pattern, flags)
+    let find_sth = search(pat, flags)
 
     norm! m'
 
     while find_sth && !s:has_right_syntax()
-        let find_sth = search(pattern, flags)
+        let find_sth = search(pat, flags)
     endwhile
 
     if !s:has_right_syntax()
