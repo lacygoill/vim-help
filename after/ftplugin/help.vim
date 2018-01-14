@@ -14,6 +14,10 @@ nno  <buffer><nowait><silent>  u  <nop>
 nno  <buffer><nowait><silent>  <cr>  <c-]>
 nno  <buffer><nowait><silent>  <bs>  <c-t>
 
+nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
+                                       \<bar> sil! aug! my_help_close_preview_window<cr>
+                                       \<c-w>P
+
 
 noremap  <buffer><expr><nowait><silent>  [c  help#bracket_rhs('command', 0)
 noremap  <buffer><expr><nowait><silent>  ]c  help#bracket_rhs('command', 1)
@@ -46,10 +50,6 @@ try
 catch
     unsilent call lg#catch_error()
 endtry
-
-nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
-                                       \<bar> sil! aug! my_help_close_preview_window<cr>
-                                       \<c-w>P
 
 " Options {{{1
 
@@ -86,6 +86,7 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'nunmap <buffer> u'
                     \|  exe 'nunmap <buffer> <cr>'
                     \|  exe 'nunmap <buffer> <bs>'
+                    \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'unmap <buffer> [c'
                     \|  exe 'unmap <buffer> ]c'
                     \|  exe 'unmap <buffer> [e'
@@ -94,6 +95,5 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'unmap <buffer> ]h'
                     \|  exe 'unmap <buffer> [O'
                     \|  exe 'unmap <buffer> ]O'
-                    \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'au!  my_help * <buffer>'
                     \  "
