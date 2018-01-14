@@ -36,7 +36,7 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 
 noremap  <buffer><silent>  <plug>(help-bracket-motion)  :<c-u>call help#bracket_motion()<cr>
 
-try
+if has_key(get(g:, 'plugs', {}), 'vim-lg-lib')
     call lg#motion#main#make_repeatable({
     \        'mode': '',
     \        'buffer': 1,
@@ -47,9 +47,7 @@ try
     \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
     \                   ]
     \ })
-catch
-    unsilent call lg#catch_error()
-endtry
+endif
 
 " Options {{{1
 
