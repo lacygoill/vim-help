@@ -23,7 +23,9 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
     try
         let s:kwd = a:kwd
 
-        if index(['v', 'V', "\<c-v>"], a:mode) >= 0
+        if a:mode ==# 'n'
+            norm! m'
+        elseif index(['v', 'V', "\<c-v>"], a:mode) >= 0
             norm! gv
         endif
 
@@ -150,8 +152,6 @@ fu! s:search_tag(kwd, is_fwd) abort "{{{2
 
     let orig_pos = getcurpos()
     let find_sth = search(pat, flags)
-
-    norm! m'
 
     while find_sth && !s:has_right_syntax()
         let find_sth = search(pat, flags)
