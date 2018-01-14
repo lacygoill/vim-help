@@ -34,8 +34,6 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 "                                         └  can't use `o`:
 "                                                it would prevent us from typing `[oP`
 
-noremap  <buffer><silent>  <plug>(help-bracket-motion)  :<c-u>call help#bracket_motion()<cr>
-
 if has_key(get(g:, 'plugs', {}), 'vim-lg-lib')
     call lg#motion#main#make_repeatable({
     \        'mode': '',

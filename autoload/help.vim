@@ -15,73 +15,26 @@ endfu
 
 fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
     let mode = mode(1)
-
-    " used to call help#bracket_motion()
-    let seq = "\<plug>(help-bracket-motion)"
-
-    " used to pass some arguments:
-    "
-    "     1. the direction
-    "     2. the current mode
-    "     3. the type of information we're looking for
-    let seq .= (a:is_fwd ? "\u2001" : "\u2000")
-    \
-    \         .get({ 'n':      "\u2001",
-    \                'v':      "\u2002",
-    \                'V':      "\u2002",
-    \                "\<c-v>": "\u2002",
-    \                'no':     "\u2003" }, mode, 'invalid')
-    \
-    \         .get({ 'command':   "\u2001",
-    \                'example':   "\u2002",
-    \                'hypertext': "\u2003",
-    \                'option':    "\u2004", }, a:kwd, 'invalid')
-    \
-    \         ."\<cr>"
-
-    if seq !~# 'invalid.\?\r'
-        call feedkeys(seq, 'i')
-    endif
-    return ''
+    return printf(":\<c-u>call help#bracket_motion(%s,%d,%s)\<cr>",
+    \             string(a:kwd), a:is_fwd, string(mode))
 endfu
 
-fu! help#bracket_motion() abort "{{{2
+fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
     try
-        let args = split(input(''), '\zs')
+        let s:kwd = a:kwd
 
-        let is_fwd = args[0] ==# "\u2001" ? 1 : 0
-
-        let mode = get({
-        \                "\u2001": 'n',
-        \                "\u2002": 'x',
-        \                "\u2003": 'o',
-        \              }, args[1], '')
-
-        let kwd = get({
-        \               "\u2001": 'command',
-        \               "\u2002": 'example',
-        \               "\u2003": 'hypertext',
-        \               "\u2004": 'option',
-        \             }, args[2], '')
-
-        if empty(mode) || empty(kwd)
-            return
-        endif
-
-        let s:kwd = kwd
-
-        if mode ==# 'x'
+        if index(['v', 'V', "\<c-v>"], a:mode) >= 0
             norm! gv
         endif
 
         " try to position the cursor on the next relevant tag
-        if !s:search_tag(kwd, is_fwd)
+        if !s:search_tag(a:kwd, a:is_fwd)
             return
         endif
 
-        if  index(['command', 'example'], kwd) >= 0
+        if  index(['command', 'example'], a:kwd) >= 0
         \|| !get(s:, 'auto_preview', 0)
-        \|| mode ==# 'o'
+        \|| a:mode ==# 'no'
             return
         endif
 
