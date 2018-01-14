@@ -52,7 +52,7 @@ fu! help#bracket_motion() abort "{{{2
         \              }, args[1], '')
 
         let kwd = get({
-        \               "\ u2001": 'command',
+        \               "\u2001": 'command',
         \               "\u2002": 'example',
         \               "\u2003": 'hypertext',
         \               "\u2004": 'option',
