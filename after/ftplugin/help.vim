@@ -25,8 +25,8 @@ noremap  <buffer><expr><nowait><silent>  ]c  help#bracket_rhs('command', 1)
 noremap  <buffer><expr><nowait><silent>  [e  help#bracket_rhs('example', 0)
 noremap  <buffer><expr><nowait><silent>  ]e  help#bracket_rhs('example', 1)
 
-noremap  <buffer><expr><nowait><silent>  [h  help#bracket_rhs('hypertext', 0)
-noremap  <buffer><expr><nowait><silent>  ]h  help#bracket_rhs('hypertext', 1)
+noremap  <buffer><expr><nowait><silent>  [H  help#bracket_rhs('hypertext', 0)
+noremap  <buffer><expr><nowait><silent>  ]H  help#bracket_rhs('hypertext', 1)
 
 noremap  <buffer><expr><nowait><silent>  [O  help#bracket_rhs('option', 0)
 noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
@@ -43,7 +43,7 @@ try
     \        'motions': [
     \                     { 'bwd': '[c',  'fwd': ']c',  'axis': 1, },
     \                     { 'bwd': '[e',  'fwd': ']e',  'axis': 1, },
-    \                     { 'bwd': '[h',  'fwd': ']h',  'axis': 1, },
+    \                     { 'bwd': '[H',  'fwd': ']H',  'axis': 1, },
     \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
     \                   ]
     \ })
@@ -91,8 +91,8 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'unmap <buffer> ]c'
                     \|  exe 'unmap <buffer> [e'
                     \|  exe 'unmap <buffer> ]e'
-                    \|  exe 'unmap <buffer> [h'
-                    \|  exe 'unmap <buffer> ]h'
+                    \|  exe 'unmap <buffer> [H'
+                    \|  exe 'unmap <buffer> ]H'
                     \|  exe 'unmap <buffer> [O'
                     \|  exe 'unmap <buffer> ]O'
                     \|  exe 'au!  my_help * <buffer>'
