@@ -144,7 +144,7 @@ fu! s:open_preview() abort "{{{2
     try
         " Why remove the autocmd?{{{
         "
-        " Suppose we have already used our mapping `]h`:
+        " Suppose we have already used our mapping `]H`:
         "
         "         the cursor is on a tag
         "         the preview window is open
@@ -156,12 +156,12 @@ fu! s:open_preview() abort "{{{2
         "       2. the autocmd
         "       3. close the preview window
         "
-        " If we don't remove the autocmd,  we can't repeat `]h`, without closing
+        " If we don't remove the autocmd,  we can't repeat `]H`, without closing
         " the preview window.
         "}}}
         sil! au! my_help_close_preview_window
         "  │
-        "  └─ if it's the 1st time we hit `]h` since the autocmd has
+        "  └─ if it's the 1st time we hit `]H` since the autocmd has
         "     been removed, there won't be any autocmd
 
         " Why not `:ptag`?{{{
