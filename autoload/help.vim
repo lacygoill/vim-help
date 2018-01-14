@@ -6,11 +6,11 @@ let g:autoloaded_help = 1
 " Functions {{{1
 fu! help#auto_preview(action) abort "{{{2
     if a:action ==# 'is_active'
-        return get(s:, 'my_auto_preview', 0) == 1
+        return get(s:, 'auto_preview', 0) == 1
     else
-        let s:my_auto_preview = a:action ==# 'enable' ? 1 : 0
+        let s:auto_preview = a:action ==# 'enable' ? 1 : 0
     endif
-    echo '[auto-preview] '.(s:my_auto_preview ? 'ON' : 'OFF')
+    echo '[auto-preview] '.(s:auto_preview ? 'ON' : 'OFF')
 endfu
 
 fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
@@ -74,7 +74,7 @@ fu! help#bracket_motion() abort "{{{2
         endif
 
         if  index(['command', 'example'], kwd) >= 0
-        \|| !get(s:, 'my_auto_preview', 0)
+        \|| !get(s:, 'auto_preview', 0)
         \|| mode ==# 'no'
             return
         endif
