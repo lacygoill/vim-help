@@ -16,8 +16,14 @@ endfu
 fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
     let mode = mode(1)
 
+    " used to call help#bracket_motion()
     let seq = "\<plug>(help-bracket-motion)"
 
+    " used to pass some arguments:
+    "
+    "     1. the direction
+    "     2. the current mode
+    "     3. the type of information we're looking for
     let seq .= (a:is_fwd ? "\u2001" : "\u2000")
     \
     \         .get({ 'n':      "\u2001",
