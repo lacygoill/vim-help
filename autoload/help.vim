@@ -47,7 +47,7 @@ fu! help#bracket_motion() abort "{{{2
 
         let mode = get({
         \                "\u2001": 'n',
-        \                "\u2002": 'v',
+        \                "\u2002": 'x',
         \                "\u2003": 'o',
         \              }, args[1], '')
 
@@ -64,7 +64,7 @@ fu! help#bracket_motion() abort "{{{2
 
         let s:kwd = kwd
 
-        if mode ==# 'v'
+        if mode ==# 'x'
             norm! gv
         endif
 
@@ -75,7 +75,7 @@ fu! help#bracket_motion() abort "{{{2
 
         if  index(['command', 'example'], kwd) >= 0
         \|| !get(s:, 'auto_preview', 0)
-        \|| mode ==# 'no'
+        \|| mode ==# 'o'
             return
         endif
 
