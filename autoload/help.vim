@@ -3,8 +3,22 @@ if exists('g:autoloaded_help')
 endif
 let g:autoloaded_help = 1
 
-" Functions {{{1
-fu! help#auto_preview(action) abort "{{{2
+" The patterns can be found in `$VIMRUNTIME/syntax/help.vim`.
+let s:keyword2pattern = {
+\                         'command'   : '`[^` \t]\+`',
+\                         'example'   : ' \?>\n\_.\{-}\zs\S',
+\                         'hypertext' : '\\\@<!|[#-)!+-~]\+|',
+\                         'option'    : '''[a-z]\{2,\}''\|''t_..''',
+\                       }
+
+let s:keyword2syntax = {
+\                        'command'   : ['helpBacktick'],
+\                        'example'   : ['helpExample'],
+\                        'hypertext' : ['helpBar', 'helpHyperTextJump'],
+\                        'option'    : ['helpOption'],
+\                      }
+
+fu! help#auto_preview(action) abort "{{{1
     if a:action ==# 'is_active'
         return get(s:, 'auto_preview', 0) == 1
     else
@@ -13,13 +27,13 @@ fu! help#auto_preview(action) abort "{{{2
     echo '[auto-preview] '.(s:auto_preview ? 'ON' : 'OFF')
 endfu
 
-fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
+fu! help#bracket_rhs(kwd, is_fwd) abort "{{{1
     let mode = mode(1)
     return printf(":\<c-u>call help#bracket_motion(%s,%d,%s)\<cr>",
     \             string(a:kwd), a:is_fwd, string(mode))
 endfu
 
-fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
+fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
     try
         let s:kwd = a:kwd
 
@@ -68,11 +82,11 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
     endtry
 endfu
 
-fu! s:has_right_syntax() abort "{{{2
+fu! s:has_right_syntax() abort "{{{1
     return index(s:keyword2syntax[s:kwd], s:syntax_under_cursor()) >= 0
 endfu
 
-fu! s:highlight_tag() abort "{{{2
+fu! s:highlight_tag() abort "{{{1
     " go to preview window
     noautocmd wincmd P
     " check we're there
@@ -89,7 +103,7 @@ fu! s:highlight_tag() abort "{{{2
     noautocmd wincmd p
 endfu
 
-fu! s:open_preview() abort "{{{2
+fu! s:open_preview() abort "{{{1
     if s:kwd ==# 'option'
         " sometimes option names are followed by punctuation
         " characters which aren't a part of the tag name
@@ -146,7 +160,7 @@ fu! s:open_preview() abort "{{{2
     return 1
 endfu
 
-fu! s:search_tag(kwd, is_fwd) abort "{{{2
+fu! s:search_tag(kwd, is_fwd) abort "{{{1
     let pat = s:keyword2pattern[a:kwd]
     let flags = (a:is_fwd ? '' : 'b').'W'
 
@@ -164,11 +178,11 @@ fu! s:search_tag(kwd, is_fwd) abort "{{{2
     return 1
 endfu
 
-fu! s:syntax_under_cursor() abort "{{{2
+fu! s:syntax_under_cursor() abort "{{{1
     return synIDattr(synID(line('.'), col('.'), 1), 'name')
 endfu
 
-fu! s:teardown_auto_preview() abort "{{{2
+fu! s:teardown_auto_preview() abort "{{{1
     augroup my_help_close_preview_window
         au!
         "              ┌─ if we use `<buffer>`, the preview window wouldn't be
@@ -184,20 +198,3 @@ fu! s:teardown_auto_preview() abort "{{{2
                       " anymore, therefore we execute `wincmd _`
     augroup END
 endfu
-
-" Variables {{{1
-
-" The patterns can be found in `$VIMRUNTIME/syntax/help.vim`.
-let s:keyword2pattern = {
-\                         'command'   : '`[^` \t]\+`',
-\                         'example'   : ' \?>\n\_.\{-}\zs\S',
-\                         'hypertext' : '\\\@<!|[#-)!+-~]\+|',
-\                         'option'    : '''[a-z]\{2,\}''\|''t_..''',
-\                       }
-
-let s:keyword2syntax = {
-\                        'command'   : ['helpBacktick'],
-\                        'example'   : ['helpExample'],
-\                        'hypertext' : ['helpBar', 'helpHyperTextJump'],
-\                        'option'    : ['helpOption'],
-\                      }
