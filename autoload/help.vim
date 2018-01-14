@@ -20,20 +20,22 @@ fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
 
     let seq .= (a:is_fwd ? "\u2001" : "\u2000")
     \
-    \         .{ 'n':      "\u2001",
-    \            'v':      "\u2002",
-    \            'V':      "\u2002",
-    \            "\<c-v>": "\u2002",
-    \            'o':      "\u2003" }[mode]
+    \         .get({ 'n':      "\u2001",
+    \                'v':      "\u2002",
+    \                'V':      "\u2002",
+    \                "\<c-v>": "\u2002",
+    \                'o':      "\u2003" }, mode, 'invalid')
     \
-    \         .{ 'command':   "\u2001",
-    \            'example':   "\u2002",
-    \            'hypertext': "\u2003",
-    \            'option':    "\u2004", }[a:kwd]
+    \         .get({ 'command':   "\u2001",
+    \                'example':   "\u2002",
+    \                'hypertext': "\u2003",
+    \                'option':    "\u2004", }, a:kwd, 'invalid')
     \
     \         ."\<cr>"
 
-    call feedkeys(seq, 'i')
+    if seq !~# 'invalid.\?\r'
+        call feedkeys(seq, 'i')
+    endif
     return ''
 endfu
 
@@ -43,18 +45,22 @@ fu! help#bracket_motion() abort "{{{2
 
         let is_fwd = args[0] ==# "\u2001" ? 1 : 0
 
-        let mode = {
-        \            "\u2001": 'n',
-        \            "\u2002": 'v',
-        \            "\u2003": 'o',
-        \          }[args[1]]
+        let mode = get({
+        \                "\u2001": 'n',
+        \                "\u2002": 'v',
+        \                "\u2003": 'o',
+        \              }, args[1], '')
 
-        let kwd = {
-        \           "\ u2001": 'command',
-        \           "\u2002": 'example',
-        \           "\u2003": 'hypertext',
-        \           "\u2004": 'option',
-        \         }[args[2]]
+        let kwd = get({
+        \               "\ u2001": 'command',
+        \               "\u2002": 'example',
+        \               "\u2003": 'hypertext',
+        \               "\u2004": 'option',
+        \             }, args[2], '')
+
+        if empty(mode) || empty(kwd)
+            return
+        endif
 
         let s:kwd = kwd
 
