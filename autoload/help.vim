@@ -24,7 +24,7 @@ fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
     \                'v':      "\u2002",
     \                'V':      "\u2002",
     \                "\<c-v>": "\u2002",
-    \                'o':      "\u2003" }, mode, 'invalid')
+    \                'no':     "\u2003" }, mode, 'invalid')
     \
     \         .get({ 'command':   "\u2001",
     \                'example':   "\u2002",
@@ -73,8 +73,10 @@ fu! help#bracket_motion() abort "{{{2
             return
         endif
 
-        if index(['command', 'example'], kwd) >= 0 || !get(s:, 'my_auto_preview', 0)
-            return ''
+        if  index(['command', 'example'], kwd) >= 0
+        \|| !get(s:, 'my_auto_preview', 0)
+        \|| mode ==# 'no'
+            return
         endif
 
         " try to open preview window
