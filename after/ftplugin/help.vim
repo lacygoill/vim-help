@@ -35,7 +35,7 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 "                                                it would prevent us from typing `[oP`
 
 if has_key(get(g:, 'plugs', {}), 'vim-lg-lib')
-    call lg#motion#main#make_repeatable({
+    call lg#motion#repeatable#main#make_repeatable({
     \        'mode':    '',
     \        'buffer':  1,
     \        'from':    expand('<sfile>:p').':'.expand('<slnum>'),
