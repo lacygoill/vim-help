@@ -58,6 +58,9 @@ augroup my_help
     au  BufWinEnter <buffer>  setl cocu=nc cole=3
 augroup END
 
+" Don't use `/*` and `*/` when we format a line with `gqq`.
+setl cms=
+
 " Adding `-` allows us to correctly jump to a tag definition, whose identifier
 " contains a dash (for an example, see `:h usr_05 | /load-plugins`).
 setl isk+=-
