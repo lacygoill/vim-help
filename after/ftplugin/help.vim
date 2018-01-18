@@ -22,8 +22,8 @@ nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview
 noremap  <buffer><expr><nowait><silent>  [c  help#bracket_rhs('command', 0)
 noremap  <buffer><expr><nowait><silent>  ]c  help#bracket_rhs('command', 1)
 
-noremap  <buffer><expr><nowait><silent>  [e  help#bracket_rhs('example', 0)
-noremap  <buffer><expr><nowait><silent>  ]e  help#bracket_rhs('example', 1)
+noremap  <buffer><expr><nowait><silent>  [E  help#bracket_rhs('example', 0)
+noremap  <buffer><expr><nowait><silent>  ]E  help#bracket_rhs('example', 1)
 
 noremap  <buffer><expr><nowait><silent>  [H  help#bracket_rhs('hypertext', 0)
 noremap  <buffer><expr><nowait><silent>  ]H  help#bracket_rhs('hypertext', 1)
@@ -41,7 +41,7 @@ if has_key(get(g:, 'plugs', {}), 'vim-lg-lib') && !exists('b:repeatable_motions'
     \        'from':    expand('<sfile>:p').':'.expand('<slnum>'),
     \        'motions': [
     \                     { 'bwd': '[c',  'fwd': ']c',  'axis': 1, },
-    \                     { 'bwd': '[e',  'fwd': ']e',  'axis': 1, },
+    \                     { 'bwd': '[E',  'fwd': ']E',  'axis': 1, },
     \                     { 'bwd': '[H',  'fwd': ']H',  'axis': 1, },
     \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
     \                   ]
@@ -86,8 +86,8 @@ let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \|  exe 'nunmap <buffer> <c-w>P'
                     \|  exe 'unmap <buffer> [c'
                     \|  exe 'unmap <buffer> ]c'
-                    \|  exe 'unmap <buffer> [e'
-                    \|  exe 'unmap <buffer> ]e'
+                    \|  exe 'unmap <buffer> [E'
+                    \|  exe 'unmap <buffer> ]E'
                     \|  exe 'unmap <buffer> [H'
                     \|  exe 'unmap <buffer> ]H'
                     \|  exe 'unmap <buffer> [O'
