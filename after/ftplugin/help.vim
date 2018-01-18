@@ -68,12 +68,14 @@ setl keywordprg=:help
 " It seems to make the text better alignmed.
 setl tabstop=8
 
+setl tw=78
+
 " Teardown {{{1
 
 let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
                     \ ."
-                    \   setl cocu< cole< isk< kp< ts<
+                    \   setl cocu< cole< isk< kp< ts< tw<
                     \|  exe 'nunmap <buffer> [oP'
                     \|  exe 'nunmap <buffer> ]oP'
                     \|  exe 'nunmap <buffer> coP'
