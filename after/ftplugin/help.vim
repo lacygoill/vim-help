@@ -40,10 +40,10 @@ if has_key(get(g:, 'plugs', {}), 'vim-lg-lib') && !exists('b:repeatable_motions'
     \        'buffer':  1,
     \        'from':    expand('<sfile>:p').':'.expand('<slnum>'),
     \        'motions': [
-    \                     { 'bwd': '[c',  'fwd': ']c',  'axis': 1, },
-    \                     { 'bwd': '[E',  'fwd': ']E',  'axis': 1, },
-    \                     { 'bwd': '[H',  'fwd': ']H',  'axis': 1, },
-    \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
+    \                     { 'bwd': '[c',  'fwd': ']c',  'space': 1, },
+    \                     { 'bwd': '[E',  'fwd': ']E',  'space': 1, },
+    \                     { 'bwd': '[H',  'fwd': ']H',  'space': 1, },
+    \                     { 'bwd': '[O',  'fwd': ']O',  'space': 1, },
     \                   ]
     \ })
 endif
