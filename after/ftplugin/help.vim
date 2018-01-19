@@ -58,6 +58,9 @@ augroup my_help
     au  BufWinEnter <buffer>  setl cocu=nc cole=3
 augroup END
 
+" don't comment a diagram
+setl cms=
+
 " Adding `-` allows us to correctly jump to a tag definition, whose identifier
 " contains a dash (for an example, see `:h usr_05 | /load-plugins`).
 setl isk+=-
@@ -76,7 +79,7 @@ setl tw=78
 let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
                     \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
                     \ ."
-                    \   setl cocu< cole< isk< kp< ts< tw<
+                    \   setl cms< cocu< cole< isk< kp< ts< tw<
                     \|  exe 'nunmap <buffer> [oP'
                     \|  exe 'nunmap <buffer> ]oP'
                     \|  exe 'nunmap <buffer> coP'
