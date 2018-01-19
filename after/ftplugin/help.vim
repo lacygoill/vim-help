@@ -68,6 +68,7 @@ setl keywordprg=:help
 " It seems to make the text better alignmed.
 setl tabstop=8
 
+" default value in the modeline of Vim help files
 setl tw=78
 
 " Teardown {{{1
