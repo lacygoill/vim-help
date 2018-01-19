@@ -11,7 +11,6 @@ syn region help_noise_NotInVi start="{only" start="{not" start="{Vi[: ]" end="}"
 "
 "     :Verbose syn list helpHyperTextEntry
 syn match helpHyperTextEntry /\*[#-)!+-~]\+\*\s/he=e-1 contains=helpStar conceal
-syn match helpHyperTextEntry /\*[#-)!+-~]\+\*$/        contains=helpStar conceal
 
 syn match help_noise_env_vrb      /\%(- \)\?Environment\_s*variables\_s*are\_s*expanded\_s*|:set_env|./ conceal
 syn match help_noise_op_backslash /,\?\_s*(\?\_s*[sS]ee\_s*|option-backslash|\_s*about\_s*including\_s*spaces\_s*and\_s*backslashes)\?./ conceal
