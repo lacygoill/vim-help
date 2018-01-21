@@ -38,12 +38,13 @@ if has_key(get(g:, 'plugs', {}), 'vim-lg-lib') && !exists('b:repeatable_motions'
     call lg#motion#repeatable#main#make_repeatable({
     \        'mode':    '',
     \        'buffer':  1,
+    \        'axis':  [',', ';'],
     \        'from':    expand('<sfile>:p').':'.expand('<slnum>'),
     \        'motions': [
-    \                     { 'bwd': '[c',  'fwd': ']c',  'axis': 1, },
-    \                     { 'bwd': '[E',  'fwd': ']E',  'axis': 1, },
-    \                     { 'bwd': '[H',  'fwd': ']H',  'axis': 1, },
-    \                     { 'bwd': '[O',  'fwd': ']O',  'axis': 1, },
+    \                     { 'bwd': '[c',  'fwd': ']c', },
+    \                     { 'bwd': '[E',  'fwd': ']E', },
+    \                     { 'bwd': '[H',  'fwd': ']H', },
+    \                     { 'bwd': '[O',  'fwd': ']O', },
     \                   ]
     \ })
 endif
