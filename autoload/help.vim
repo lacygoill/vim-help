@@ -29,6 +29,11 @@ endfu
 
 fu! help#bracket_rhs(kwd, is_fwd) abort "{{{1
     let mode = mode(1)
+
+    if mode ==# "\<c-v>"
+        let mode = "\<c-v>\<c-v>"
+    endif
+
     return printf(":\<c-u>call help#bracket_motion(%s,%d,%s)\<cr>",
     \             string(a:kwd), a:is_fwd, string(mode))
 endfu
