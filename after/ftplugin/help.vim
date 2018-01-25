@@ -34,7 +34,7 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 "                                         └  can't use `o`:
 "                                                it would prevent us from typing `[oP`
 
-if has_key(get(g:, 'plugs', {}), 'vim-lg-lib') && !exists('b:repeatable_motions')
+if has_key(get(g:, 'plugs', {}), 'vim-lg-lib')
     call lg#motion#repeatable#make#all({
     \        'mode':   '',
     \        'buffer': 1,
