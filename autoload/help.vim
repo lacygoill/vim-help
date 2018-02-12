@@ -19,10 +19,10 @@ let s:keyword2syntax = {
 \                      }
 
 fu! help#auto_preview(action) abort "{{{1
-    if a:action ==# 'is_active'
-        return get(s:, 'auto_preview', 0) == 1
+    if a:action is# 'is_active'
+        return get(s:, 'auto_preview', 0) ==# 1
     else
-        let s:auto_preview = a:action ==# 'enable' ? 1 : 0
+        let s:auto_preview = a:action is# 'enable' ? 1 : 0
     endif
     echo '[auto-preview] '.(s:auto_preview ? 'ON' : 'OFF')
 endfu
@@ -37,7 +37,7 @@ fu! help#bracket_rhs(kwd, is_fwd) abort "{{{1
     "     “insert the next character literally”
     "
     " The solution is to double `C-v`.
-    if mode ==# "\<c-v>"
+    if mode is# "\<c-v>"
         let mode = "\<c-v>\<c-v>"
     endif
 
@@ -49,7 +49,7 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
     try
         let s:kwd = a:kwd
 
-        if a:mode ==# 'n'
+        if a:mode is# 'n'
             norm! m'
         elseif index(['v', 'V', "\<c-v>"], a:mode) >= 0
             norm! gv
@@ -62,7 +62,7 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
 
         if  index(['command', 'example'], a:kwd) >= 0
         \|| !get(s:, 'auto_preview', 0)
-        \|| a:mode ==# 'no'
+        \|| a:mode is# 'no'
             return
         endif
 
@@ -116,11 +116,11 @@ fu! s:highlight_tag() abort "{{{1
 endfu
 
 fu! s:open_preview() abort "{{{1
-    if s:kwd ==# 'option'
+    if s:kwd is# 'option'
         " sometimes option names are followed by punctuation
         " characters which aren't a part of the tag name
         let ident = matchstr(expand('<cword>'), "'.\\{-}'")
-    elseif s:kwd ==# 'hypertext'
+    elseif s:kwd is# 'hypertext'
         let ident = matchstr(expand('<cWORD>'), '\v.{-}\|\zs.{-1,}\ze\|.*')
     else
         return 0
