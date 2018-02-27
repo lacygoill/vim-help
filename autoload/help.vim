@@ -4,19 +4,19 @@ endif
 let g:autoloaded_help = 1
 
 " The patterns can be found in `$VIMRUNTIME/syntax/help.vim`.
-let s:keyword2pattern = {
-\                         'command'   : '`[^` \t]\+`',
-\                         'example'   : ' \?>\n\_.\{-}\zs\S',
-\                         'hypertext' : '\\\@<!|[#-)!+-~]\+|',
-\                         'option'    : '''[a-z]\{2,\}''\|''t_..''',
-\                       }
+let s:KWD2PAT = {
+\                 'command'   : '`[^` \t]\+`',
+\                 'example'   : ' \?>\n\_.\{-}\zs\S',
+\                 'hypertext' : '\\\@<!|[#-)!+-~]\+|',
+\                 'option'    : '''[a-z]\{2,\}''\|''t_..''',
+\               }
 
-let s:keyword2syntax = {
-\                        'command'   : ['helpBacktick'],
-\                        'example'   : ['helpExample'],
-\                        'hypertext' : ['helpBar', 'helpHyperTextJump'],
-\                        'option'    : ['helpOption'],
-\                      }
+let s:KWD2SYNTAX = {
+\                    'command'   : ['helpBacktick'],
+\                    'example'   : ['helpExample'],
+\                    'hypertext' : ['helpBar', 'helpHyperTextJump'],
+\                    'option'    : ['helpOption'],
+\                  }
 
 fu! help#auto_preview(action) abort "{{{1
     if a:action is# 'is_active'
@@ -95,7 +95,7 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
 endfu
 
 fu! s:has_right_syntax() abort "{{{1
-    return index(s:keyword2syntax[s:kwd], s:syntax_under_cursor()) >= 0
+    return index(s:KWD2SYNTAX[s:kwd], s:syntax_under_cursor()) >= 0
 endfu
 
 fu! s:highlight_tag() abort "{{{1
@@ -173,7 +173,7 @@ fu! s:open_preview() abort "{{{1
 endfu
 
 fu! s:search_tag(kwd, is_fwd) abort "{{{1
-    let pat = s:keyword2pattern[a:kwd]
+    let pat = s:KWD2PAT[a:kwd]
     let flags = (a:is_fwd ? '' : 'b').'W'
 
     let orig_pos = getcurpos()
