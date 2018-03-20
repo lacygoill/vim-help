@@ -20,7 +20,7 @@ let s:KWD2SYNTAX = {
 
 fu! help#auto_preview(action) abort "{{{1
     if a:action is# 'is_active'
-        return get(s:, 'auto_preview', 0) == 1
+        return get(s:, 'auto_preview', 0) ==# 1
     else
         let s:auto_preview = a:action is# 'enable' ? 1 : 0
     endif
