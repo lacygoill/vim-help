@@ -100,7 +100,7 @@ endfu
 
 fu! s:highlight_tag() abort "{{{1
     " go to preview window
-    noautocmd wincmd P
+    noa wincmd P
     " check we're there
     if &l:pvw
         if exists('w:my_preview_tag')
@@ -112,7 +112,7 @@ fu! s:highlight_tag() abort "{{{1
         let &l:cole = 0
     endif
     " back to original window
-    noautocmd wincmd p
+    noa wincmd p
 endfu
 
 fu! s:open_preview() abort "{{{1
