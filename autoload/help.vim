@@ -60,9 +60,9 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
             return
         endif
 
-        if  index(['command', 'example'], a:kwd) >= 0
-        \|| !get(s:, 'auto_preview', 0)
-        \|| a:mode is# 'no'
+        if   index(['command', 'example'], a:kwd) >= 0
+        \ || !get(s:, 'auto_preview', 0)
+        \ || a:mode is# 'no'
             return
         endif
 
@@ -203,9 +203,9 @@ fu! s:teardown_auto_preview() abort "{{{1
         "              │  if the tag is defined in another file
         "              │
         au CursorMoved * pclose
-                      \| wincmd _
-                      \| exe 'au!  my_help_close_preview_window'
-                      \|      aug! my_help_close_preview_window
+                     \ | wincmd _
+                     \ | exe 'au!  my_help_close_preview_window'
+                     \ |      aug! my_help_close_preview_window
                       " after closing the preview window, the help window isn't maximized
                       " anymore, therefore we execute `wincmd _`
     augroup END
