@@ -36,17 +36,16 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 
 if has_key(get(g:, 'plugs', {}), 'vim-lg-lib')
     call lg#motion#repeatable#make#all({
-    \        'mode':   '',
-    \        'buffer': 1,
-    \        'axis':   {'bwd': ',', 'fwd': ';'},
-    \        'from':   expand('<sfile>:p').':'.expand('<slnum>'),
-    \        'motions': [
-    \                     { 'bwd': '[c',  'fwd': ']c', },
-    \                     { 'bwd': '[E',  'fwd': ']E', },
-    \                     { 'bwd': '[H',  'fwd': ']H', },
-    \                     { 'bwd': '[O',  'fwd': ']O', },
-    \                   ]
-    \ })
+        \ 'mode': '',
+        \ 'buffer': 1,
+        \ 'axis': {'bwd': ',', 'fwd': ';'},
+        \ 'from': expand('<sfile>:p').':'.expand('<slnum>'),
+        \ 'motions': [
+        \     {'bwd': '[c',  'fwd': ']c',},
+        \     {'bwd': '[E',  'fwd': ']E',},
+        \     {'bwd': '[H',  'fwd': ']H',},
+        \     {'bwd': '[O',  'fwd': ']O',},
+        \ ]})
 endif
 
 " Options {{{1
