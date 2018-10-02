@@ -34,7 +34,7 @@ noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
 "                                         └  can't use `o`:
 "                                                it would prevent us from typing `[oP`
 
-if match(&rtp, 'vim-lg-lib') >= 0
+if stridx(&rtp, 'vim-lg-lib') >= 0
     call lg#motion#repeatable#make#all({
         \ 'mode': '',
         \ 'buffer': 1,
