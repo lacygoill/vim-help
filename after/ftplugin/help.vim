@@ -61,8 +61,8 @@ augroup END
 " don't comment a diagram
 setl cms=
 
-" Adding `-` allows us to correctly jump to a tag definition, whose identifier
-" contains a dash (for an example, see `:h usr_05 | /load-plugins`).
+" Adding `-` allows  us to correctly jump to a  tag definition, whose identifier
+" contains a hyphen (for an example, see `:h usr_05 | /load-plugins`).
 setl isk+=-
 
 " Default program to call when hitting K on a word
