@@ -76,27 +76,30 @@ setl tw=78
 
 " Teardown {{{1
 
-let b:undo_ftplugin =         get(b:, 'undo_ftplugin', '')
-                    \ .(empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
-                    \ ."
-                    \      setl cms< cocu< cole< isk< kp< ts< tw<
-                    \    | exe 'nunmap <buffer> [oP'
-                    \    | exe 'nunmap <buffer> ]oP'
-                    \    | exe 'nunmap <buffer> coP'
-                    \    | exe 'nunmap <buffer> p'
-                    \    | exe 'xunmap <buffer> p'
-                    \    | exe 'nunmap <buffer> q'
-                    \    | exe 'nunmap <buffer> u'
-                    \    | exe 'nunmap <buffer> <cr>'
-                    \    | exe 'nunmap <buffer> <bs>'
-                    \    | exe 'nunmap <buffer> <c-w>P'
-                    \    | exe 'unmap <buffer> [c'
-                    \    | exe 'unmap <buffer> ]c'
-                    \    | exe 'unmap <buffer> [E'
-                    \    | exe 'unmap <buffer> ]E'
-                    \    | exe 'unmap <buffer> [H'
-                    \    | exe 'unmap <buffer> ]H'
-                    \    | exe 'unmap <buffer> [O'
-                    \    | exe 'unmap <buffer> ]O'
-                    \    | exe 'au!  my_help * <buffer>'
-                    \  "
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
+    \ . (empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
+    \ . 'setl cms< cocu< cole< isk< kp< ts< tw<'
+    \ . '| exe "au! my_help * <buffer>"'
+    \
+    \ . '| nunmap <buffer> [oP'
+    \ . '| nunmap <buffer> ]oP'
+    \ . '| nunmap <buffer> coP'
+    \
+    \ . '| nunmap <buffer> p'
+    \ . '| xunmap <buffer> p'
+    \
+    \ . '| nunmap <buffer> q'
+    \ . '| nunmap <buffer> u'
+    \ . '| nunmap <buffer> <cr>'
+    \ . '| nunmap <buffer> <bs>'
+    \ . '| nunmap <buffer> <c-w>P'
+    \
+    \ . '| unmap <buffer> [c'
+    \ . '| unmap <buffer> ]c'
+    \ . '| unmap <buffer> [E'
+    \ . '| unmap <buffer> ]E'
+    \ . '| unmap <buffer> [H'
+    \ . '| unmap <buffer> ]H'
+    \ . '| unmap <buffer> [O'
+    \ . '| unmap <buffer> ]O'
+
