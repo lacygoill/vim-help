@@ -78,28 +78,30 @@ setl tw=78
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
     \ . (empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
-    \ . 'setl cms< cocu< cole< isk< kp< ts< tw<'
-    \ . '| exe "au! my_help * <buffer>"'
+    \ . "
+    \ setl cms< cocu< cole< isk< kp< ts< tw<
+    \|exe 'au! my_help * <buffer>'
     \
-    \ . '| nunmap <buffer> [oP'
-    \ . '| nunmap <buffer> ]oP'
-    \ . '| nunmap <buffer> coP'
+    \|nunmap <buffer> [oP
+    \|nunmap <buffer> ]oP
+    \|nunmap <buffer> coP
     \
-    \ . '| nunmap <buffer> p'
-    \ . '| xunmap <buffer> p'
+    \|sil! nunmap <buffer> p
+    \|sil! xunmap <buffer> p
     \
-    \ . '| nunmap <buffer> q'
-    \ . '| nunmap <buffer> u'
-    \ . '| nunmap <buffer> <cr>'
-    \ . '| nunmap <buffer> <bs>'
-    \ . '| nunmap <buffer> <c-w>P'
+    \|sil! nunmap <buffer> q
+    \|sil! nunmap <buffer> u
+    \|nunmap <buffer> <cr>
+    \|nunmap <buffer> <bs>
+    \|nunmap <buffer> <c-w>P
     \
-    \ . '| unmap <buffer> [c'
-    \ . '| unmap <buffer> ]c'
-    \ . '| unmap <buffer> [E'
-    \ . '| unmap <buffer> ]E'
-    \ . '| unmap <buffer> [H'
-    \ . '| unmap <buffer> ]H'
-    \ . '| unmap <buffer> [O'
-    \ . '| unmap <buffer> ]O'
+    \|unmap <buffer> [c
+    \|unmap <buffer> ]c
+    \|unmap <buffer> [E
+    \|unmap <buffer> ]E
+    \|unmap <buffer> [H
+    \|unmap <buffer> ]H
+    \|unmap <buffer> [O
+    \|unmap <buffer> ]O
+    \"
 
