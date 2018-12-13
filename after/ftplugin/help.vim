@@ -79,29 +79,30 @@ setl tw=78
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
     \ . (empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
     \ . "
-    \ setl cms< cocu< cole< isk< kp< ts< tw<
-    \|exe 'au! my_help * <buffer>'
+    \   setl cms< cocu< cole< isk< kp< ts< tw<
+    \ | exe 'au! my_help * <buffer>'
     \
-    \|nunmap <buffer> [oP
-    \|nunmap <buffer> ]oP
-    \|nunmap <buffer> coP
+    \ | exe 'nunmap <buffer> [oP'
+    \ | exe 'nunmap <buffer> ]oP'
+    \ | exe 'nunmap <buffer> coP'
     \
-    \|sil! nunmap <buffer> p
-    \|sil! xunmap <buffer> p
+    \ | sil! exe 'nunmap <buffer> p'
+    \ | sil! exe 'xunmap <buffer> p'
     \
-    \|sil! nunmap <buffer> q
-    \|sil! nunmap <buffer> u
-    \|nunmap <buffer> <cr>
-    \|nunmap <buffer> <bs>
-    \|nunmap <buffer> <c-w>P
+    \ | sil! exe 'nunmap <buffer> q'
+    \ | sil! exe 'nunmap <buffer> u'
     \
-    \|unmap <buffer> [c
-    \|unmap <buffer> ]c
-    \|unmap <buffer> [E
-    \|unmap <buffer> ]E
-    \|unmap <buffer> [H
-    \|unmap <buffer> ]H
-    \|unmap <buffer> [O
-    \|unmap <buffer> ]O
-    \"
+    \ | exe 'nunmap <buffer> <cr>'
+    \ | exe 'nunmap <buffer> <bs>'
+    \ | exe 'nunmap <buffer> <c-w>P'
+    \
+    \ | exe 'unmap <buffer> [c'
+    \ | exe 'unmap <buffer> ]c'
+    \ | exe 'unmap <buffer> [E'
+    \ | exe 'unmap <buffer> ]E'
+    \ | exe 'unmap <buffer> [H'
+    \ | exe 'unmap <buffer> ]H'
+    \ | exe 'unmap <buffer> [O'
+    \ | exe 'unmap <buffer> ]O'
+    \ "
 
