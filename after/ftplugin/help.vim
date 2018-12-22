@@ -79,7 +79,8 @@ setl tw=78
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
     \ . (empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
     \ . "
-    \   setl cms< cocu< cole< isk< kp< ts< tw<
+    \   setl cms< cocu< cole< isk< ts< tw<
+    \ | set kp<
     \ | exe 'au! my_help * <buffer>'
     \
     \ | exe 'nunmap <buffer> [oP'
