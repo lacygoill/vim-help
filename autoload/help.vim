@@ -7,7 +7,7 @@ let g:autoloaded_help = 1
 let s:KWD2PAT = {
 \                 'command'   : '`[^` \t]\+`',
 \                 'example'   : ' \?>\n\_.\{-}\zs\S',
-\                 'hypertext' : '\\\@<!|[#-)!+-~]\+|',
+\                 'hypertext' : '\\\@1<!|[#-)!+-~]\+|',
 \                 'option'    : '''[a-z]\{2,\}''\|''t_..''',
 \               }
 
