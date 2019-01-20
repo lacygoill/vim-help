@@ -202,11 +202,11 @@ fu! s:teardown_auto_preview() abort "{{{1
         "              │  would occur in the new buffer;
         "              │  if the tag is defined in another file
         "              │
-        au CursorMoved * pclose
-                     \ | wincmd _
-                     \ | exe 'au!  my_help_close_preview_window'
-                     \ |      aug! my_help_close_preview_window
-                      " after closing the preview window, the help window isn't maximized
-                      " anymore, therefore we execute `wincmd _`
+        au CursorMoved * pclose | wincmd _
+        "                         │
+        "                         └ after closing the preview window,
+        "                           the help window isn't maximized anymore,
+        "                           therefore we execute `wincmd _`
+        au CursorMoved * exe 'au!  my_help_close_preview_window' | aug! my_help_close_preview_window
     augroup END
 endfu
