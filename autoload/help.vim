@@ -197,16 +197,17 @@ endfu
 fu! s:teardown_auto_preview() abort "{{{1
     augroup my_help_close_preview_window
         au!
+        " Why executing `wincmd _`?{{{
+        "
+        " After  closing the  preview window,  the help  window isn't  maximized
+        " anymore.
+        "}}}
         "              ┌─ if we use `<buffer>`, the preview window wouldn't be
         "              │  closed when we hit Enter on a tag, because `CursorMoved`
         "              │  would occur in the new buffer;
         "              │  if the tag is defined in another file
         "              │
-        au CursorMoved * pclose | wincmd _
-        "                         │
-        "                         └ after closing the preview window,
-        "                           the help window isn't maximized anymore,
-        "                           therefore we execute `wincmd _`
-        au CursorMoved * exe 'au!  my_help_close_preview_window' | aug! my_help_close_preview_window
+        au CursorMoved * sil! pclose | sil! wincmd _
+            \ | exe 'au!  my_help_close_preview_window' | aug! my_help_close_preview_window
     augroup END
 endfu
