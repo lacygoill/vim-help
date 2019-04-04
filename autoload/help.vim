@@ -79,8 +79,8 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
 
         call s:highlight_tag()
 
-        " We need to install a fire-once autocmd to close the preview
-        " window when we'll move the cursor. But we can't do it now.
+        " We need to install a one-shot autocmd to close the preview window when
+        " we'll move the cursor. But we can't do it now.
         "
         " Why?
         " The `search()` invocation inside `s:search_tag()` fires `CursorMoved`.
@@ -137,7 +137,7 @@ fu! s:open_preview() abort "{{{1
         "
         "         the cursor is on a tag
         "         the preview window is open
-        "         a fire-once autocmd is installed
+        "         a one-shot autocmd is installed
         "
         " In this case, the next `:ptag` will trigger:
         "
