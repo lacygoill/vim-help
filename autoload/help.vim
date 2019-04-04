@@ -207,7 +207,6 @@ fu! s:teardown_auto_preview() abort "{{{1
         "              │  would occur in the new buffer;
         "              │  if the tag is defined in another file
         "              │
-        au CursorMoved * sil! pclose | sil! wincmd _
-            \ | exe 'au!  my_help_close_preview_window' | aug! my_help_close_preview_window
+        au CursorMoved * ++once sil! pclose | sil! wincmd _
     augroup END
 endfu
