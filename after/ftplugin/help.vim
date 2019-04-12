@@ -75,10 +75,9 @@ setl tw=78
 
 " Teardown {{{1
 
-let b:undo_ftplugin = get(b:, 'undo_ftplugin', '')
-    \ . (empty(get(b:, 'undo_ftplugin', '')) ? '' : '|')
+let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
     \ . "
-    \   setl cms< cocu< cole< isk< ts< tw<
+    \ | setl cms< cocu< cole< isk< ts< tw<
     \ | set kp<
     \ | exe 'au! my_help * <buffer>'
     \
