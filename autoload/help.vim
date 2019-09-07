@@ -141,30 +141,36 @@ fu! s:open_preview() abort "{{{1
         "
         " In this case, the next `:ptag` will trigger:
         "
-        "       1. CursorMoved
-        "       2. the autocmd
-        "       3. close the preview window
+        "    1. CursorMoved
+        "    2. the autocmd
+        "    3. close the preview window
         "
         " If we don't remove the autocmd,  we can't repeat `]H`, without closing
         " the preview window.
         "}}}
         sil! au! my_help_close_preview_window
         "  │
-        "  └─ if it's the 1st time we hit `]H` since the autocmd has
-        "     been removed, there won't be any autocmd
+        "  └ if it's the 1st time we hit `]H` since the autocmd has
+        "    been removed, there won't be any autocmd
 
-        " Why not `:ptag`?{{{
+        " Why not `:exe 'ptag '..ident`?{{{
         "
-        " `C-w }` is more reliable.
+        " Not reliable enough.
+        "
         " For example,  if an  identifier in  a help file  begins with  a slash,
         " `:ptag` will,  wrongly, interpret  it as a  regex, instead  of literal
         " string.
-        " Example:    :h usr_41|/\\C
-        " We would need to escape the slash:
         "
-        "         let ident = '/\V'.escape(ident[1:], '\')
+        " Example:
+        "
+        "     :h usr_41
+        "     /\\C
+        "
+        " You would need to escape the slash:
+        "
+        "     let ident = '/\V'.escape(ident[1:], '\')
         "}}}
-        exe "norm! \<c-w>}"
+        wincmd }
     catch
         call lg#catch_error()
         return 0
