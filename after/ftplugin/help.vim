@@ -52,10 +52,8 @@ endif
 " When we re-display a help buffer in a 2nd window, the conceal feature
 " doesn't seem to work. Re-apply the conceal options to make sure that all
 " characters which are supposed to be concealed, are concealed.
-augroup my_help
-    au! *           <buffer>
-    au  BufWinEnter <buffer>  setl cocu=nc cole=3
-augroup END
+setl cocu=nc
+setl cole=3
 
 " don't comment a diagram
 setl cms=
@@ -79,7 +77,6 @@ let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
     \ . "
     \ | setl cms< cocu< cole< isk< ts< tw<
     \ | set kp<
-    \ | exe 'au! my_help * <buffer>'
     \
     \ | exe 'nunmap <buffer> [oP'
     \ | exe 'nunmap <buffer> ]oP'
