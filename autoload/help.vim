@@ -20,7 +20,7 @@ let s:KWD2SYNTAX = {
 
 fu! help#auto_preview(action) abort "{{{1
     if a:action is# 'is_active'
-        return get(s:, 'auto_preview', 0) ==# 1
+        return get(s:, 'auto_preview', 0) == 1
     else
         let s:auto_preview = a:action is# 'enable' ? 1 : 0
     endif
@@ -67,12 +67,6 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
         endif
 
         " try to open preview window
-        " it may fail because some words which are colored as tags don't have any
-        " matching tag:
-        "                 :h
-        "                 /pi_logipat
-        "                 k$
-        "                 ]h
         if !s:open_preview()
             return
         endif
@@ -81,13 +75,14 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{1
 
         " We need to install a one-shot autocmd to close the preview window when
         " we'll move the cursor. But we can't do it now.
+        " Why?{{{
         "
-        " Why?
         " The `search()` invocation inside `s:search_tag()` fires `CursorMoved`.
         " And for some reason, this motion would trigger our closing autocmd too soon.
-        " It shouldn't happen, since `search()` is invoked BEFORE the installation…
+        " It shouldn't happen, since `search()` is invoked *before* the installation...
         " Anyway, a solution is to delay the installation of the autocmd.
-        call timer_start(0, { -> s:teardown_auto_preview() })
+        "}}}
+        call timer_start(0, {-> s:teardown_auto_preview()})
 
     catch
         return lg#catch_error()
