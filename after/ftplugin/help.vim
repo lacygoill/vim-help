@@ -1,51 +1,17 @@
 " Mappings {{{1
 
-nno  <buffer><nowait><silent>  [oP  :<c-u>call help#auto_preview('enable')<cr>
-nno  <buffer><nowait><silent>  ]oP  :<c-u>call help#auto_preview('disable')<cr>
-nno  <buffer><nowait><silent>  coP  :<c-u>call help#auto_preview(help#auto_preview('is_active')
-                                   \ ? 'disable' : 'enable')<cr>
+" avoid error `E21` when pressing `p` by accident
+nno  <buffer><nowait><silent> p :<c-u>call help#preview_tag()<cr>
+xno  <buffer><nowait><silent> p <nop>
+nmap <buffer><nowait><silent> q <plug>(my_quit)
+nno  <buffer><nowait><silent> u <nop>
 
-" avoid error `E21` when hitting `p` by accident
-nno  <buffer><nowait><silent>  p  <nop>
-xno  <buffer><nowait><silent>  p  <nop>
-nmap <buffer><nowait><silent>  q  <plug>(my_quit)
-nno  <buffer><nowait><silent>  u  <nop>
+nno <buffer><nowait><silent> <cr> <c-]>
+nno <buffer><nowait><silent> <bs> <c-t>
 
-nno  <buffer><nowait><silent>  <cr>  <c-]>
-nno  <buffer><nowait><silent>  <bs>  <c-t>
-
-nno  <buffer><nowait><silent>  <c-w>P  :<c-u>sil! exe 'au! my_help_close_preview_window'
-                                      \ <bar> sil! aug! my_help_close_preview_window<cr>
-                                       \<c-w>P
-
-
-noremap  <buffer><expr><nowait><silent>  [c  help#bracket_rhs('command', 0)
-noremap  <buffer><expr><nowait><silent>  ]c  help#bracket_rhs('command', 1)
-
-noremap  <buffer><expr><nowait><silent>  [E  help#bracket_rhs('example', 0)
-noremap  <buffer><expr><nowait><silent>  ]E  help#bracket_rhs('example', 1)
-
-noremap  <buffer><expr><nowait><silent>  [H  help#bracket_rhs('hypertext', 0)
-noremap  <buffer><expr><nowait><silent>  ]H  help#bracket_rhs('hypertext', 1)
-
-noremap  <buffer><expr><nowait><silent>  [O  help#bracket_rhs('option', 0)
-noremap  <buffer><expr><nowait><silent>  ]O  help#bracket_rhs('option', 1)
-"                                         │
-"                                         └  can't use `o`:
-"                                                it would prevent us from typing `[oP`
-
-if stridx(&rtp, 'vim-lg-lib') >= 0
-    call lg#motion#repeatable#make#all({
-        \ 'mode': '',
-        \ 'buffer': 1,
-        \ 'from': expand('<sfile>:p').':'.expand('<slnum>'),
-        \ 'motions': [
-        \     {'bwd': '[c',  'fwd': ']c',},
-        \     {'bwd': '[E',  'fwd': ']E',},
-        \     {'bwd': '[H',  'fwd': ']H',},
-        \     {'bwd': '[O',  'fwd': ']O',},
-        \ ]})
-endif
+nno <buffer><nowait><silent> ( :<c-u>call help#jump_to_tag('previous')<cr>
+nno <buffer><nowait><silent> ) :<c-u>call help#jump_to_tag('next')<cr>
+nno <buffer><nowait><silent> z} <c-w>z<c-w>_
 
 " Options {{{1
 
@@ -74,13 +40,9 @@ setl tw=78
 " Teardown {{{1
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-    \ . "
+    \ .."
     \ | setl cms< cocu< cole< isk< ts< tw<
     \ | set kp<
-    \
-    \ | exe 'nunmap <buffer> [oP'
-    \ | exe 'nunmap <buffer> ]oP'
-    \ | exe 'nunmap <buffer> coP'
     \
     \ | sil! exe 'nunmap <buffer> p'
     \ | sil! exe 'xunmap <buffer> p'
@@ -88,17 +50,10 @@ let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
     \ | sil! exe 'nunmap <buffer> q'
     \ | sil! exe 'nunmap <buffer> u'
     \
+    \ | exe 'nunmap <buffer> ('
+    \ | exe 'nunmap <buffer> )'
+    \ | exe 'nunmap <buffer> z}'
     \ | exe 'nunmap <buffer> <cr>'
     \ | exe 'nunmap <buffer> <bs>'
-    \ | exe 'nunmap <buffer> <c-w>P'
-    \
-    \ | exe 'unmap <buffer> [c'
-    \ | exe 'unmap <buffer> ]c'
-    \ | exe 'unmap <buffer> [E'
-    \ | exe 'unmap <buffer> ]E'
-    \ | exe 'unmap <buffer> [H'
-    \ | exe 'unmap <buffer> ]H'
-    \ | exe 'unmap <buffer> [O'
-    \ | exe 'unmap <buffer> ]O'
     \ "
 
