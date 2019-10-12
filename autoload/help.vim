@@ -6,15 +6,19 @@ let g:autoloaded_help = 1
 " Init {{{1
 
 " the patterns can be found in `$VIMRUNTIME/syntax/help.vim`
-let s:PAT = '\\\@1<!|[#-)!+-~]\+|\|''[a-z]\{2,\}''\|''t_..'''
-"            ├──────────────────┘  ├───────────────────────┘
-"            │                     └ helpOption
-"            └ helpHyperTextJump
+const s:PAT = '\\\@1<!|[#-)!+-~]\+|\|''[a-z]\{2,\}''\|''t_..'''
+"              ├──────────────────┘  ├───────────────────────┘
+"              │                     └ helpOption
+"              └ helpHyperTextJump
 
-let s:SYNTAX_GROUPS = ['helpBar', 'helpHyperTextJump', 'helpOption']
+const s:SYNTAX_GROUPS =<< trim END
+    helpBar
+    helpHyperTextJump
+    helpOption
+END
 
 " Interface {{{1
-fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
+fu help#bracket_rhs(kwd, is_fwd) abort "{{{2
     let mode = mode(1)
 
     " If we're in visual block mode, we can't pass `C-v` directly.
@@ -32,7 +36,7 @@ fu! help#bracket_rhs(kwd, is_fwd) abort "{{{2
     \             string(a:kwd), a:is_fwd, string(mode))
 endfu
 
-fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
+fu help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
     try
         if a:mode is# 'n'
             norm! m'
@@ -46,7 +50,7 @@ fu! help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
     endtry
 endfu
 
-fu! help#preview_tag() abort "{{{2
+fu help#preview_tag() abort "{{{2
     try
         " Why not `:exe 'ptag '..ident`?{{{
         "
@@ -84,7 +88,7 @@ fu! help#preview_tag() abort "{{{2
     endtry
 endfu
 
-fu! help#jump_to_tag(which_one) abort "{{{2
+fu help#jump_to_tag(which_one) abort "{{{2
     if a:which_one is# 'next'
         call s:search_tag(1)
     elseif a:which_one is# 'previous'
@@ -93,7 +97,7 @@ fu! help#jump_to_tag(which_one) abort "{{{2
 endfu
 "}}}1
 " Core {{{1
-fu! s:search_tag(is_fwd) abort "{{{2
+fu s:search_tag(is_fwd) abort "{{{2
     let flags = (a:is_fwd ? '' : 'b')..'W'
 
     let orig_pos = getcurpos()
@@ -110,7 +114,7 @@ fu! s:search_tag(is_fwd) abort "{{{2
     return 1
 endfu
 
-fu! s:highlight_tag() abort "{{{2
+fu s:highlight_tag() abort "{{{2
     " go to preview window
     noa wincmd P
     " check we're there
@@ -128,11 +132,11 @@ fu! s:highlight_tag() abort "{{{2
 endfu
 "}}}1
 " Utilities {{{1
-fu! s:has_right_syntax() abort "{{{2
+fu s:has_right_syntax() abort "{{{2
     return index(s:SYNTAX_GROUPS, s:syntax_under_cursor()) >= 0
 endfu
 
-fu! s:syntax_under_cursor() abort "{{{2
+fu s:syntax_under_cursor() abort "{{{2
     return synIDattr(synID(line('.'), col('.'), 1), 'name')
 endfu
 
