@@ -12,9 +12,9 @@ const s:PAT = '\\\@1<!|[#-)!+-~]\+|\|''[a-z]\{2,\}''\|''t_..'''
 "              └ helpHyperTextJump
 
 const s:SYNTAX_GROUPS =<< trim END
-    helpBar
-    helpHyperTextJump
-    helpOption
+helpBar
+helpHyperTextJump
+helpOption
 END
 
 " Interface {{{1
@@ -100,7 +100,7 @@ endfu
 fu s:search_tag(is_fwd) abort "{{{2
     let flags = (a:is_fwd ? '' : 'b')..'W'
 
-    let orig_pos = getcurpos()
+    let pos = getcurpos()
     let find_sth = search(s:PAT, flags)
 
     while find_sth && !s:has_right_syntax()
@@ -108,7 +108,7 @@ fu s:search_tag(is_fwd) abort "{{{2
     endwhile
 
     if !s:has_right_syntax()
-        call setpos('.', orig_pos)
+        call setpos('.', pos)
         return 0
     endif
     return 1

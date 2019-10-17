@@ -40,20 +40,20 @@ setl tw=78
 " Teardown {{{1
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-    \ .."
+    \ ..'
     \ | setl cms< cocu< cole< isk< ts< tw<
     \ | set kp<
     \
-    \ | sil! exe 'nunmap <buffer> p'
-    \ | sil! exe 'xunmap <buffer> p'
+    \ | sil! exe "nunmap <buffer> p"
+    \ | sil! exe "xunmap <buffer> p"
     \
-    \ | sil! exe 'nunmap <buffer> q'
-    \ | sil! exe 'nunmap <buffer> u'
+    \ | sil! exe "nunmap <buffer> q"
+    \ | sil! exe "nunmap <buffer> u"
     \
-    \ | exe 'nunmap <buffer> ('
-    \ | exe 'nunmap <buffer> )'
-    \ | exe 'nunmap <buffer> z}'
-    \ | exe 'nunmap <buffer> <cr>'
-    \ | exe 'nunmap <buffer> <bs>'
-    \ "
+    \ | exe "nunmap <buffer> ("
+    \ | exe "nunmap <buffer> )"
+    \ | exe "nunmap <buffer> z}"
+    \ | exe "nunmap <buffer> <cr>"
+    \ | exe "nunmap <buffer> <bs>"
+    \ '
 
