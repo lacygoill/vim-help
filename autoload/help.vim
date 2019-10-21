@@ -12,9 +12,9 @@ const s:PAT = '\\\@1<!|[#-)!+-~]\+|\|''[a-z]\{2,\}''\|''t_..'''
 "              └ helpHyperTextJump
 
 const s:SYNTAX_GROUPS =<< trim END
-helpBar
-helpHyperTextJump
-helpOption
+    helpBar
+    helpHyperTextJump
+    helpOption
 END
 
 " Interface {{{1
