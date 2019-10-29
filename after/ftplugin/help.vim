@@ -9,8 +9,10 @@ nno  <buffer><nowait><silent> u <nop>
 nno <buffer><nowait><silent> <cr> <c-]>
 nno <buffer><nowait><silent> <bs> <c-t>
 
-nno <buffer><nowait><silent> ( :<c-u>call help#jump_to_tag('previous')<cr>
-nno <buffer><nowait><silent> ) :<c-u>call help#jump_to_tag('next')<cr>
+nno <buffer><nowait><silent> ( :<c-u>call help#jump_to_tag('hypertext', 'previous')<cr>
+nno <buffer><nowait><silent> ) :<c-u>call help#jump_to_tag('hypertext', 'next')<cr>
+nno <buffer><nowait><silent> O :<c-u>call help#jump_to_tag('option', 'previous')<cr>
+nno <buffer><nowait><silent> o :<c-u>call help#jump_to_tag('option', 'next')<cr>
 nno <buffer><nowait><silent> z} <c-w>z<c-w>_
 
 " Options {{{1
@@ -40,20 +42,5 @@ setl tw=78
 " Teardown {{{1
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-    \ ..'
-    \ | setl cms< cocu< cole< isk< ts< tw<
-    \ | set kp<
-    \
-    \ | sil! exe "nunmap <buffer> p"
-    \ | sil! exe "xunmap <buffer> p"
-    \
-    \ | sil! exe "nunmap <buffer> q"
-    \ | sil! exe "nunmap <buffer> u"
-    \
-    \ | exe "nunmap <buffer> ("
-    \ | exe "nunmap <buffer> )"
-    \ | exe "nunmap <buffer> z}"
-    \ | exe "nunmap <buffer> <cr>"
-    \ | exe "nunmap <buffer> <bs>"
-    \ '
+    \ ..'| call help#undo_ftplugin()'
 

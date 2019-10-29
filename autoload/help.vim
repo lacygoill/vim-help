@@ -6,58 +6,28 @@ let g:autoloaded_help = 1
 " Init {{{1
 
 " the patterns can be found in `$VIMRUNTIME/syntax/help.vim`
-const s:PAT = '\\\@1<!|[#-)!+-~]\+|\|''[a-z]\{2,\}''\|''t_..'''
-"              ├──────────────────┘  ├───────────────────────┘
-"              │                     └ helpOption
-"              └ helpHyperTextJump
+const s:PAT_HYPERTEXT = '\\\@1<!|[#-)!+-~]\+|'
+const s:PAT_OPTION = '''[a-z]\{2,\}''\|''t_..'''
 
-const s:SYNTAX_GROUPS =<< trim END
+const s:SYNTAX_GROUPS_HYPERTEXT =<< trim END
     helpBar
     helpHyperTextJump
-    helpOption
 END
 
+const s:SYNTAX_GROUPS_OPTION = ['helpOption']
+
 " Interface {{{1
-fu help#bracket_rhs(kwd, is_fwd) abort "{{{2
-    let mode = mode(1)
-
-    " If we're in visual block mode, we can't pass `C-v` directly.
-    " It's going to by directly typed on the command-line.
-    " On the command-line, `C-v` means:
-    "
-    "     “insert the next character literally”
-    "
-    " The solution is to double `C-v`.
-    if mode is# "\<c-v>"
-        let mode = "\<c-v>\<c-v>"
-    endif
-
-    return printf(":\<c-u>call help#bracket_motion(%s,%d,%s)\<cr>",
-    \             string(a:kwd), a:is_fwd, string(mode))
-endfu
-
-fu help#bracket_motion(kwd, is_fwd, mode) abort "{{{2
-    try
-        if a:mode is# 'n'
-            norm! m'
-        elseif index(['v', 'V', "\<c-v>"], a:mode) >= 0
-            norm! gv
-        endif
-        " try to position the cursor on the next relevant tag
-        call s:search_tag(a:is_fwd)
-    catch
-        return lg#catch_error()
-    endtry
-endfu
-
 fu help#preview_tag() abort "{{{2
+    if index(s:SYNTAX_GROUPS_HYPERTEXT + s:SYNTAX_GROUPS_OPTION, s:syntax_under_cursor()) == -1
+        return
+    endif
     try
         " Why not `:exe 'ptag '..ident`?{{{
         "
         " Not reliable enough.
         "
         " For example,  if an  identifier in  a help file  begins with  a slash,
-        " `:ptag` will,  wrongly, interpret  it as a  regex, instead  of literal
+        " `:ptag` will – wrongly – interpret it as a regex, instead of a literal
         " string.
         "
         " Example:
@@ -88,32 +58,48 @@ fu help#preview_tag() abort "{{{2
     endtry
 endfu
 
-fu help#jump_to_tag(which_one) abort "{{{2
-    if a:which_one is# 'next'
-        call s:search_tag(1)
-    elseif a:which_one is# 'previous'
-        call s:search_tag(0)
+fu help#jump_to_tag(type, dir) abort "{{{2
+    let flags = (a:dir is# 'previous' ? 'b' : '')..'W'
+
+    let pos = getcurpos()
+    let pat = s:PAT_{toupper(a:type)}
+    let find_sth = search(pat, flags)
+
+    while find_sth && !s:has_right_syntax(a:type)
+        let find_sth = search(pat, flags)
+    endwhile
+
+    if !s:has_right_syntax(a:type)
+        call setpos('.', pos)
+    else
+        " allow us to jump back with `C-o`
+        let new_pos = getcurpos()
+        call setpos('.', pos)
+        k'
+        call setpos('.', new_pos)
     endif
+endfu
+
+fu help#undo_ftplugin() abort "{{{2
+    setl cms< cocu< cole< isk< ts< tw<
+    set kp<
+
+    sil! nunmap <buffer> p
+    sil! xunmap <buffer> p
+
+    sil! nunmap <buffer> q
+    sil! nunmap <buffer> u
+
+    nunmap <buffer> (
+    nunmap <buffer> )
+    nunmap <buffer> O
+    nunmap <buffer> o
+    nunmap <buffer> z}
+    nunmap <buffer> <cr>
+    nunmap <buffer> <bs>
 endfu
 "}}}1
 " Core {{{1
-fu s:search_tag(is_fwd) abort "{{{2
-    let flags = (a:is_fwd ? '' : 'b')..'W'
-
-    let pos = getcurpos()
-    let find_sth = search(s:PAT, flags)
-
-    while find_sth && !s:has_right_syntax()
-        let find_sth = search(s:PAT, flags)
-    endwhile
-
-    if !s:has_right_syntax()
-        call setpos('.', pos)
-        return 0
-    endif
-    return 1
-endfu
-
 fu s:highlight_tag() abort "{{{2
     " go to preview window
     noa wincmd P
@@ -132,8 +118,8 @@ fu s:highlight_tag() abort "{{{2
 endfu
 "}}}1
 " Utilities {{{1
-fu s:has_right_syntax() abort "{{{2
-    return index(s:SYNTAX_GROUPS, s:syntax_under_cursor()) >= 0
+fu s:has_right_syntax(type) abort "{{{2
+    return index(s:SYNTAX_GROUPS_{toupper(a:type)}, s:syntax_under_cursor()) >= 0
 endfu
 
 fu s:syntax_under_cursor() abort "{{{2
