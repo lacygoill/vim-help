@@ -11,8 +11,8 @@ nno <buffer><nowait><silent> <bs> <c-t>
 
 nno <buffer><nowait><silent> ( :<c-u>call help#jump_to_tag('hypertext', 'previous')<cr>
 nno <buffer><nowait><silent> ) :<c-u>call help#jump_to_tag('hypertext', 'next')<cr>
-nno <buffer><nowait><silent> O :<c-u>call help#jump_to_tag('option', 'previous')<cr>
-nno <buffer><nowait><silent> o :<c-u>call help#jump_to_tag('option', 'next')<cr>
+nno <buffer><nowait><silent> < :<c-u>call help#jump_to_tag('option', 'previous')<cr>
+nno <buffer><nowait><silent> > :<c-u>call help#jump_to_tag('option', 'next')<cr>
 nno <buffer><nowait><silent> z} <c-w>z<c-w>_
 
 " Options {{{1

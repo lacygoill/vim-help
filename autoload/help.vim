@@ -92,8 +92,8 @@ fu help#undo_ftplugin() abort "{{{2
 
     nunmap <buffer> (
     nunmap <buffer> )
-    nunmap <buffer> O
-    nunmap <buffer> o
+    nunmap <buffer> <
+    nunmap <buffer> >
     nunmap <buffer> z}
     nunmap <buffer> <cr>
     nunmap <buffer> <bs>
