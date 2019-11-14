@@ -81,7 +81,7 @@ fu help#jump_to_tag(type, dir) abort "{{{2
 endfu
 
 fu help#undo_ftplugin() abort "{{{2
-    setl cms< cocu< cole< isk< ts< tw<
+    setl cms< cocu< cole< isk< mps< ts< tw<
     set kp<
 
     sil! nunmap <buffer> p

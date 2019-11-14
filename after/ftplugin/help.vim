@@ -33,6 +33,9 @@ setl isk+=-
 " Default program to call when hitting K on a word
 setl keywordprg=:help
 
+" prevent `vim-matchup` from showing offscreen fold marker
+setl mps-={:}
+
 " It seems to make the text better alignmed.
 setl tabstop=8
 
