@@ -123,6 +123,9 @@ fu s:has_right_syntax(type) abort "{{{2
 endfu
 
 fu s:syntax_under_cursor() abort "{{{2
-    return synIDattr(synID(line('.'), col('.'), 1), 'name')
+    " twice because of bug: https://github.com/vim/vim/issues/5252
+    let id = synID(line('.'), col('.'), 1)
+    let id = synID(line('.'), col('.'), 1)
+    return synIDattr(id, 'name')
 endfu
 
