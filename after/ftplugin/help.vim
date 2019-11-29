@@ -20,8 +20,7 @@ nno <buffer><nowait><silent> z} <c-w>z<c-w>_
 " When we re-display a help buffer in a 2nd window, the conceal feature
 " doesn't seem to work. Re-apply the conceal options to make sure that all
 " characters which are supposed to be concealed, are concealed.
-setl cocu=nc
-setl cole=3
+setl cocu=nc cole=3
 
 " don't comment a diagram
 setl cms=
@@ -33,7 +32,7 @@ setl isk+=-
 " Default program to call when hitting K on a word
 setl kp=:help
 
-" It seems to make the text better alignmed.
+" It seems to make the text better aligned.
 setl ts=8
 
 " default value in the modeline of Vim help files
