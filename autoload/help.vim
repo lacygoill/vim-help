@@ -52,7 +52,7 @@ fu help#preview_tag() abort "{{{2
         " because – if the tag is  defined in another file – `CursorMoved` would
         " be fired in the new buffer.
         "}}}
-        au CursorMoved * ++once sil! pclose | sil! wincmd _
+        au CursorMoved * ++once pclose | wincmd _
     catch
         call lg#catch_error()
     endtry
