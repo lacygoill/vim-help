@@ -29,7 +29,7 @@ setl cms=
 " contains a hyphen (for an example, see `:h usr_05 /load-plugins`).
 setl isk+=-
 
-" Default program to call when hitting K on a word
+" default program to call when pressing `K` on a word
 setl kp=:help
 
 " It seems to make the text better aligned.
