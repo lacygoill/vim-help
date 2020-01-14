@@ -83,6 +83,7 @@ endfu
 fu help#undo_ftplugin() abort "{{{2
     setl cms< cocu< cole< isk< ts< tw<
     set kp<
+    au! help_customize_isk * <buffer>
 
     sil! nunmap <buffer> p
     sil! xunmap <buffer> p

@@ -27,7 +27,19 @@ setl cms=
 
 " Adding `-` allows  us to correctly jump to a  tag definition, whose identifier
 " contains a hyphen (for an example, see `:h usr_05 /load-plugins`).
+" Warning:{{{
+"
+" If you customize `'isk'` further, make sure to update `s:restore_these()` in:
+"
+"     ~/.vim/plugged/vim-session/plugin/session.vim
+"}}}
 setl isk+=-
+    " Without this autocmd, our 'isk' configuration  is lost when we redisplay a
+    " help file after quitting it `:h|q|h`.
+    augroup help_customize_isk
+        au! * <buffer>
+        au BufWinEnter <buffer> setl isk+=-
+    augroup END
 
 " default program to call when pressing `K` on a word
 setl kp=:help
