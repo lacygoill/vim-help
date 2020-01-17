@@ -75,7 +75,7 @@ fu help#jump_to_tag(type, dir) abort "{{{2
         " allow us to jump back with `C-o`
         let new_pos = getcurpos()
         call setpos('.', pos)
-        k'
+        norm! m'
         call setpos('.', new_pos)
     endif
 endfu
