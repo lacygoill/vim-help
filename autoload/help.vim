@@ -54,7 +54,7 @@ fu help#preview_tag() abort "{{{2
         "}}}
         au CursorMoved * ++once pclose | wincmd _
     catch
-        call lg#catch_error()
+        call lg#catch()
     endtry
 endfu
 
