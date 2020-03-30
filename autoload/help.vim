@@ -52,7 +52,7 @@ fu help#preview_tag() abort "{{{2
         " because – if the tag is  defined in another file – `CursorMoved` would
         " be fired in the new buffer.
         "}}}
-        au CursorMoved * ++once pclose | wincmd _
+        au CursorMoved * ++once call s:close_preview()
     catch
         call lg#catch()
     endtry
@@ -83,7 +83,7 @@ endfu
 fu help#undo_ftplugin() abort "{{{2
     setl cms< cocu< cole< isk< ts< tw<
     set kp<
-    au! help_customize_isk * <buffer>
+    au! my_help * <buffer>
 
     sil! nunmap <buffer> p
     sil! xunmap <buffer> p
@@ -102,20 +102,26 @@ endfu
 "}}}1
 " Core {{{1
 fu s:highlight_tag() abort "{{{2
-    " go to preview window
-    noa wincmd P
-    " check we're there
-    if &l:pvw
-        if exists('w:my_preview_tag')
-            call matchdelete(w:my_preview_tag)
-        endif
-        let pat = '\%'..line('.')..'l\%'..col('.')..'c\S\+'
-        let w:my_preview_tag = matchadd('IncSearch', pat)
-        " make sure there's no conceal so that we see the tag
-        let &l:cole = 0
+    let winid = s:preview_getid()
+    let matchid = getwinvar(winid, '_preview_tag')
+    if matchid
+        call matchdelete(matchid, winid)
     endif
-    " back to original window
-    noa wincmd p
+    call lg#win_execute(winid, 'let w:_tag_pos = getcurpos()')
+    let [lnum, col] = getwinvar(winid, '_tag_pos')[1:2]
+    let pat = '\%'..lnum..'l\%'..col..'c\S\+'
+    let _preview_tag = matchadd('IncSearch', pat, 10, -1, {'window': winid})
+    call setwinvar(winid, '_preview_tag', _preview_tag)
+endfu
+
+fu s:close_preview() abort "{{{2
+    if exists('+pvp') && &pvp isnot# ''
+        let winid = popup_findpreview()
+        call popup_close(winid)
+    else
+        pclose
+        wincmd _
+    endif
 endfu
 "}}}1
 " Utilities {{{1
@@ -128,5 +134,15 @@ fu s:syntax_under_cursor() abort "{{{2
     let id = synID(line('.'), col('.'), 1)
     let id = synID(line('.'), col('.'), 1)
     return synIDattr(id, 'name')
+endfu
+
+fu s:preview_getid() abort "{{{2
+    if exists('+pvp') && &pvp isnot# ''
+        let winid = popup_findpreview()
+    else
+        let winnr = match(map(range(1, winnr('$')), {_,v -> getwinvar(v, '&pvw')}), 1) + 1
+        let winid = win_getid(winnr)
+    endif
+    return winid
 endfu
 

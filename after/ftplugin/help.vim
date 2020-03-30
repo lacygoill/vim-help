@@ -34,11 +34,21 @@ setl cms=
 "     ~/.vim/plugged/vim-session/plugin/session.vim
 "}}}
 setl isk+=-
-    " Without this autocmd, our 'isk' configuration  is lost when we redisplay a
-    " help file after quitting it `:h|q|h`.
-    augroup help_customize_isk
+    augroup my_help
         au! * <buffer>
+        " Without  this  autocmd,  our  'isk'  configuration  is  lost  when  we
+        " redisplay a help file after quitting it `:h|q|h`.
         au BufWinEnter <buffer> setl isk+=-
+        " Why resetting these options to their default values in a popup?  Doesn't Vim do it automatically?{{{
+        "
+        " Apparently, not always.
+        "
+        "     $ vim -Nu NONE +'set scl=yes previewpopup=height:10,width:60'
+        "     :h
+        "     /bar
+        "     :wincmd }
+        "}}}
+        au BufWinEnter <buffer> if !has('nvim') && win_gettype() is# 'popup' | setl scl&vim wrap&vim cole&vim | endif
     augroup END
 
 " default program to call when pressing `K` on a word
