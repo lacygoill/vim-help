@@ -48,7 +48,7 @@ setl isk+=-
         "     /bar
         "     :wincmd }
         "}}}
-        au BufWinEnter <buffer> if !has('nvim') && win_gettype() is# 'popup' | setl scl&vim wrap&vim cole&vim | endif
+        au BufWinEnter <buffer> if win_gettype() is# 'popup' | setl scl&vim wrap&vim cole&vim | endif
     augroup END
 
 " default program to call when pressing `K` on a word

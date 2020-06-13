@@ -107,7 +107,7 @@ fu s:highlight_tag() abort "{{{2
     if matchid
         call matchdelete(matchid, winid)
     endif
-    call lg#win_execute(winid, 'let w:_tag_pos = getcurpos()')
+    call win_execute(winid, 'let w:_tag_pos = getcurpos()')
     let [lnum, col] = getwinvar(winid, '_tag_pos')[1:2]
     let pat = '\%'..lnum..'l\%'..col..'c\S\+'
     let _preview_tag = matchadd('IncSearch', pat, 10, -1, {'window': winid})
