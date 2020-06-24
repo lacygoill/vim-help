@@ -20,7 +20,7 @@ syn match help_noise_modeline /This\_s*option\_s*cannot\_s*be\_s*set\_s*from\_s*
 "                     [extend]
 "                     [excludenl]
 "                     start={start_pattern} ..
-"                           ^^^^^^^^^^^^^^^
+"                           ^-------------^
 "                     ...
 "}}}
 syn match helpSpecial @{[-_a-zA-Z0-9'"*+/:%#=[\]<>.,]\+}@
