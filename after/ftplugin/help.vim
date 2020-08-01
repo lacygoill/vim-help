@@ -25,7 +25,7 @@ setl cocu=nc cole=3
 " don't comment a diagram
 setl cms=
 
-" Adding `-` allows  us to correctly jump to a  tag definition, whose identifier
+" Adding  `-` lets  us  correctly jump  to a  tag  definition, whose  identifier
 " contains a hyphen (for an example, see `:h usr_05 /load-plugins`).
 " Warning:{{{
 "
