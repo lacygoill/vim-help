@@ -5,6 +5,8 @@ let g:autoloaded_help = 1
 
 " Init {{{1
 
+import Catch from 'lg.vim'
+
 " the patterns can be found in `$VIMRUNTIME/syntax/help.vim`
 const s:PAT_HYPERTEXT = '\\\@1<!|[#-)!+-~]\+|'
 const s:PAT_OPTION = '''[a-z]\{2,\}''\|''t_..'''
@@ -22,7 +24,7 @@ fu help#preview_tag() abort "{{{2
         return
     endif
     try
-        " Why not `:exe 'ptag '..ident`?{{{
+        " Why not `:exe 'ptag ' .. ident`?{{{
         "
         " Not reliable enough.
         "
@@ -37,7 +39,7 @@ fu help#preview_tag() abort "{{{2
         "
         " You would need to escape the slash:
         "
-        "     let ident = '/\V'.escape(ident[1:], '\')
+        "     let ident = '/\V' .. escape(ident[1:], '\')
         "}}}
         wincmd }
         call s:highlight_tag()
@@ -54,12 +56,12 @@ fu help#preview_tag() abort "{{{2
         "}}}
         au CursorMoved * ++once call s:close_preview()
     catch
-        call lg#catch()
+        call s:Catch()
     endtry
 endfu
 
 fu help#jump_to_tag(type, dir) abort "{{{2
-    let flags = (a:dir is# 'previous' ? 'b' : '')..'W'
+    let flags = (a:dir is# 'previous' ? 'b' : '') .. 'W'
 
     let pos = getcurpos()
     let pat = s:PAT_{toupper(a:type)}
@@ -109,13 +111,13 @@ fu s:highlight_tag() abort "{{{2
     endif
     call win_execute(winid, 'let w:_tag_pos = getcurpos()')
     let [lnum, col] = getwinvar(winid, '_tag_pos')[1:2]
-    let pat = '\%'..lnum..'l\%'..col..'c\S\+'
+    let pat = '\%' .. lnum .. 'l\%' .. col .. 'c\S\+'
     let _preview_tag = matchadd('IncSearch', pat, 10, -1, {'window': winid})
     call setwinvar(winid, '_preview_tag', _preview_tag)
 endfu
 
 fu s:close_preview() abort "{{{2
-    if exists('+pvp') && &pvp isnot# ''
+    if exists('+pvp') && &pvp != ''
         let winid = popup_findpreview()
         call popup_close(winid)
     else
@@ -131,16 +133,16 @@ endfu
 
 fu s:syntax_under_cursor() abort "{{{2
     " twice because of bug: https://github.com/vim/vim/issues/5252
-    let id = synID(line('.'), col('.'), 1)
-    let id = synID(line('.'), col('.'), 1)
+    let id = synID('.', col('.'), 1)
+    let id = synID('.', col('.'), 1)
     return synIDattr(id, 'name')
 endfu
 
 fu s:preview_getid() abort "{{{2
-    if exists('+pvp') && &pvp isnot# ''
+    if exists('+pvp') && &pvp != ''
         let winid = popup_findpreview()
     else
-        let winnr = match(map(range(1, winnr('$')), {_,v -> getwinvar(v, '&pvw')}), 1) + 1
+        let winnr = range(1, winnr('$'))->map({_, v -> getwinvar(v, '&pvw')})->match(1) + 1
         let winid = win_getid(winnr)
     endif
     return winid

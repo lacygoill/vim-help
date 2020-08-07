@@ -17,9 +17,9 @@ nno <buffer><nowait><silent> z} <c-w>z<c-w>_
 
 " Options {{{1
 
-" When we re-display a help buffer in a 2nd window, the conceal feature
-" doesn't seem to work. Re-apply the conceal options to make sure that all
-" characters which are supposed to be concealed, are concealed.
+" When we re-display a help buffer in  a 2nd window, the conceal feature doesn't
+" seem to work.   Re-apply the conceal options to make  sure that all characters
+" which are supposed to be concealed, are concealed.
 setl cocu=nc cole=3
 
 " don't comment a diagram
@@ -63,5 +63,5 @@ setl tw=78
 " Teardown {{{1
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-    \ ..'| call help#undo_ftplugin()'
+    \ .. '| call help#undo_ftplugin()'
 
