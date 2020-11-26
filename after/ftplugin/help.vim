@@ -1,19 +1,19 @@
 " Mappings {{{1
 
 " avoid error `E21` when pressing `p` by accident
-nno  <buffer><nowait><silent> p :<c-u>call help#preview_tag()<cr>
-xno  <buffer><nowait><silent> p <nop>
-nmap <buffer><nowait><silent> q <plug>(my_quit)
-nno  <buffer><nowait><silent> u <nop>
+nno  <buffer><nowait> p <cmd>call help#preview_tag()<cr>
+xno  <buffer><nowait> p <nop>
+nmap <buffer><nowait> q <plug>(my_quit)
+nno  <buffer><nowait> u <nop>
 
-nno <buffer><nowait><silent> <cr> <c-]>
-nno <buffer><nowait><silent> <bs> <c-t>
+nno <buffer><nowait> <cr> <c-]>
+nno <buffer><nowait> <bs> <c-t>
 
-nno <buffer><nowait><silent> ( :<c-u>call help#jump_to_tag('hypertext', 'previous')<cr>
-nno <buffer><nowait><silent> ) :<c-u>call help#jump_to_tag('hypertext', 'next')<cr>
-nno <buffer><nowait><silent> < :<c-u>call help#jump_to_tag('option', 'previous')<cr>
-nno <buffer><nowait><silent> > :<c-u>call help#jump_to_tag('option', 'next')<cr>
-nno <buffer><nowait><silent> z} <c-w>z<c-w>_
+nno <buffer><nowait> ( <cmd>call help#jump_to_tag('hypertext', 'previous')<cr>
+nno <buffer><nowait> ) <cmd>call help#jump_to_tag('hypertext', 'next')<cr>
+nno <buffer><nowait> < <cmd>call help#jump_to_tag('option', 'previous')<cr>
+nno <buffer><nowait> > <cmd>call help#jump_to_tag('option', 'next')<cr>
+nno <buffer><nowait> z} <c-w>z<c-w>_
 
 " Options {{{1
 
