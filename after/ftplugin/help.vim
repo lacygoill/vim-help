@@ -34,7 +34,7 @@ setl cms=
 "     ~/.vim/plugged/vim-session/plugin/session.vim
 "}}}
 setl isk+=-
-    augroup my_help
+    augroup MyHelp
         au! * <buffer>
         " Without  this  autocmd,  our  'isk'  configuration  is  lost  when  we
         " redisplay a help file after quitting it `:h|q|h`.

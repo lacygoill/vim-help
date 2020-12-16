@@ -84,7 +84,7 @@ endfu
 
 fu help#undo_ftplugin() abort "{{{2
     set cms< cocu< cole< isk< kp< ts< tw<
-    au! my_help * <buffer>
+    au! MyHelp * <buffer>
 
     sil! nunmap <buffer> p
     sil! xunmap <buffer> p
