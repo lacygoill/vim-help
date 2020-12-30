@@ -39,7 +39,7 @@ fu help#preview_tag() abort "{{{2
         "
         " You would need to escape the slash:
         "
-        "     let ident = '/\V' .. escape(ident[1:], '\')
+        "     let ident = '/\V' .. escape(ident[1 :], '\')
         "}}}
         wincmd }
         call s:highlight_tag()
@@ -109,7 +109,7 @@ fu s:highlight_tag() abort "{{{2
         call matchdelete(matchid, winid)
     endif
     call win_execute(winid, 'let w:_tag_pos = getcurpos()')
-    let [lnum, col] = getwinvar(winid, '_tag_pos')[1:2]
+    let [lnum, col] = getwinvar(winid, '_tag_pos')[1 : 2]
     let pat = '\%' .. lnum .. 'l\%' .. col .. 'c\S\+'
     let _preview_tag = matchadd('IncSearch', pat, 0, -1, #{window: winid})
     call setwinvar(winid, '_preview_tag', _preview_tag)
