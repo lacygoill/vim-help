@@ -1,7 +1,7 @@
 " Mappings {{{1
 
 " avoid error `E21` when pressing `p` by accident
-nno  <buffer><nowait> p <cmd>call help#preview_tag()<cr>
+nno  <buffer><nowait> p <cmd>call help#previewTag()<cr>
 xno  <buffer><nowait> p <nop>
 nmap <buffer><nowait> q <plug>(my_quit)
 nno  <buffer><nowait> u <nop>
@@ -9,10 +9,10 @@ nno  <buffer><nowait> u <nop>
 nno <buffer><nowait> <cr> <c-]>
 nno <buffer><nowait> <bs> <c-t>
 
-nno <buffer><nowait> ( <cmd>call help#jump_to_tag('hypertext', 'previous')<cr>
-nno <buffer><nowait> ) <cmd>call help#jump_to_tag('hypertext', 'next')<cr>
-nno <buffer><nowait> < <cmd>call help#jump_to_tag('option', 'previous')<cr>
-nno <buffer><nowait> > <cmd>call help#jump_to_tag('option', 'next')<cr>
+nno <buffer><nowait> ( <cmd>call help#jumpToTag('hypertext', 'previous')<cr>
+nno <buffer><nowait> ) <cmd>call help#jumpToTag('hypertext', 'next')<cr>
+nno <buffer><nowait> < <cmd>call help#jumpToTag('option', 'previous')<cr>
+nno <buffer><nowait> > <cmd>call help#jumpToTag('option', 'next')<cr>
 nno <buffer><nowait> z} <c-w>z<c-w>_
 
 " Options {{{1
@@ -63,5 +63,5 @@ setl tw=78
 " Teardown {{{1
 
 let b:undo_ftplugin = get(b:, 'undo_ftplugin', 'exe')
-    \ .. '| call help#undo_ftplugin()'
+    \ .. '| call help#undoFtplugin()'
 

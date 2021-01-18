@@ -1,88 +1,93 @@
-if exists('g:autoloaded_help')
-    finish
-endif
-let g:autoloaded_help = 1
+vim9 noclear
 
-" Init {{{1
+if exists('loaded') | finish | endif
+var loaded = true
+
+# Init {{{1
 
 import Catch from 'lg.vim'
 
-" the patterns can be found in `$VIMRUNTIME/syntax/help.vim`
-const s:PAT_HYPERTEXT = '\\\@1<!|[#-)!+-~]\+|'
-const s:PAT_OPTION = '''[a-z]\{2,\}''\|''t_..'''
+# the patterns can be found in `$VIMRUNTIME/syntax/help.vim`
+const PAT_HYPERTEXT: string = '\\\@1<!|[#-)!+-~]\+|'
+const PAT_OPTION: string = '''[a-z]\{2,\}''\|''t_..'''
 
-const s:SYNTAX_GROUPS_HYPERTEXT =<< trim END
+const SYNTAX_GROUPS_HYPERTEXT: list<string> =<< trim END
     helpBar
     helpHyperTextJump
 END
 
-const s:SYNTAX_GROUPS_OPTION = ['helpOption']
+const SYNTAX_GROUPS_OPTION: list<string> = ['helpOption']
 
-" Interface {{{1
-fu help#preview_tag() abort "{{{2
-    if index(s:SYNTAX_GROUPS_HYPERTEXT + s:SYNTAX_GROUPS_OPTION, s:syntax_under_cursor()) == -1
+# Interface {{{1
+def help#previewTag() #{{{2
+    if index(SYNTAX_GROUPS_HYPERTEXT + SYNTAX_GROUPS_OPTION, SyntaxUnderCursor()) == -1
         return
     endif
     try
-        " Why not `:exe 'ptag ' .. ident`?{{{
-        "
-        " Not reliable enough.
-        "
-        " For example,  if an  identifier in  a help file  begins with  a slash,
-        " `:ptag` will – wrongly – interpret it as a regex, instead of a literal
-        " string.
-        "
-        " Example:
-        "
-        "     :h usr_41
-        "     /\\C
-        "
-        " You would need to escape the slash:
-        "
-        "     let ident = '/\V' .. escape(ident[1 :], '\')
-        "}}}
+        # Why not `:exe 'ptag ' .. ident`?{{{
+        #
+        # Not reliable enough.
+        #
+        # For example,  if an  identifier in  a help file  begins with  a slash,
+        # `:ptag` will – wrongly – interpret it as a regex, instead of a literal
+        # string.
+        #
+        # Example:
+        #
+        #     :h usr_41
+        #     /\\C
+        #
+        # You would need to escape the slash:
+        #
+        #     let ident = '/\V' .. escape(ident[1 :], '\')
+        #}}}
         wincmd }
-        call s:highlight_tag()
-        " Why `wincmd _`?{{{
-        "
-        " After  closing the  preview window,  the help  window isn't  maximized
-        " anymore.
-        "}}}
-        " Do *not* use the autocmd pattern `<buffer>`.{{{
-        "
-        " The preview  window wouldn't be closed  when we press Enter  on a tag,
-        " because – if the tag is  defined in another file – `CursorMoved` would
-        " be fired in the new buffer.
-        "}}}
-        au CursorMoved * ++once call s:close_preview()
+        HighlightTag()
+        # Why `wincmd _`?{{{
+        #
+        # After  closing the  preview window,  the help  window isn't  maximized
+        # anymore.
+        #}}}
+        # Do *not* use the autocmd pattern `<buffer>`.{{{
+        #
+        # The preview  window wouldn't be closed  when we press Enter  on a tag,
+        # because – if the tag is  defined in another file – `CursorMoved` would
+        # be fired in the new buffer.
+        #}}}
+        au CursorMoved * ++once ClosePreview()
     catch
-        call s:Catch()
+        Catch()
     endtry
-endfu
+enddef
 
-fu help#jump_to_tag(type, dir) abort "{{{2
-    let flags = (a:dir is# 'previous' ? 'b' : '') .. 'W'
+def help#jumpToTag(type: string, dir: string) #{{{2
+    var flags: string = (dir == 'previous' ? 'b' : '') .. 'W'
 
-    let pos = getcurpos()
-    let pat = s:PAT_{toupper(a:type)}
-    let find_sth = search(pat, flags)
+    var pos: list<number> = getcurpos()
+    var pat: string
+    if type == 'option'
+        pat = PAT_OPTION
+    elseif type == 'hypertext'
+        pat = PAT_HYPERTEXT
+    endif
+    var find_sth: bool = search(pat, flags) != 0
 
-    while find_sth && !s:has_right_syntax(a:type)
-        let find_sth = search(pat, flags)
+    while find_sth && !HasRightSyntax(type)
+        find_sth = search(pat, flags) != 0
     endwhile
 
-    if !s:has_right_syntax(a:type)
-        call setpos('.', pos)
+    if !HasRightSyntax(type)
+        setpos('.', pos)
     else
-        " allow us to jump back with `C-o`
-        let new_pos = getcurpos()
-        call setpos('.', pos)
+        # allow us to jump back with `C-o`
+        var new_pos: list<number> = getcurpos()
+        setpos('.', pos)
         norm! m'
-        call setpos('.', new_pos)
+        setpos('.', new_pos)
     endif
-endfu
+enddef
 
-fu help#undo_ftplugin() abort "{{{2
+def help#undoFtplugin() #{{{2
     set cms< cocu< cole< isk< kp< ts< tw<
     au! MyHelp * <buffer>
 
@@ -99,51 +104,60 @@ fu help#undo_ftplugin() abort "{{{2
     nunmap <buffer> z}
     nunmap <buffer> <cr>
     nunmap <buffer> <bs>
-endfu
-"}}}1
-" Core {{{1
-fu s:highlight_tag() abort "{{{2
-    let winid = s:preview_getid()
-    let matchid = getwinvar(winid, '_preview_tag')
-    if matchid
-        call matchdelete(matchid, winid)
+enddef
+#}}}1
+# Core {{{1
+def HighlightTag() #{{{2
+    var winid: number = PreviewGetid()
+    var matchid: number = getwinvar(winid, '_preview_tag', 0)
+    if matchid != 0
+        matchdelete(matchid, winid)
     endif
-    call win_execute(winid, 'let w:_tag_pos = getcurpos()')
-    let [lnum, col] = getwinvar(winid, '_tag_pos')[1 : 2]
-    let pat = '\%' .. lnum .. 'l\%' .. col .. 'c\S\+'
-    let _preview_tag = matchadd('IncSearch', pat, 0, -1, #{window: winid})
-    call setwinvar(winid, '_preview_tag', _preview_tag)
-endfu
+    win_execute(winid, 'w:_tag_pos = getcurpos()')
+    var lnum: number
+    var col: number
+    [lnum, col] = getwinvar(winid, '_tag_pos')[1 : 2]
+    var pat: string = '\%' .. lnum .. 'l\%' .. col .. 'c\S\+'
+    var _preview_tag: number = matchadd('IncSearch', pat, 0, -1, {window: winid})
+    setwinvar(winid, '_preview_tag', _preview_tag)
+enddef
 
-fu s:close_preview() abort "{{{2
+def ClosePreview() #{{{2
     if exists('+pvp') && &pvp != ''
-        let winid = popup_findpreview()
-        call popup_close(winid)
+        popup_findpreview()->popup_close()
     else
         pclose
         wincmd _
     endif
-endfu
-"}}}1
-" Utilities {{{1
-fu s:has_right_syntax(type) abort "{{{2
-    return index(s:SYNTAX_GROUPS_{toupper(a:type)}, s:syntax_under_cursor()) >= 0
-endfu
-
-fu s:syntax_under_cursor() abort "{{{2
-    " twice because of bug: https://github.com/vim/vim/issues/5252
-    let id = synID('.', col('.'), 1)
-    let id = synID('.', col('.'), 1)
-    return synIDattr(id, 'name')
-endfu
-
-fu s:preview_getid() abort "{{{2
-    if exists('+pvp') && &pvp != ''
-        let winid = popup_findpreview()
+enddef
+#}}}1
+# Utilities {{{1
+def HasRightSyntax(type: string): bool #{{{2
+    var syngroups: list<string>
+    if type == 'option'
+        syngroups = SYNTAX_GROUPS_OPTION
     else
-        let winnr = range(1, winnr('$'))->map({_, v -> getwinvar(v, '&pvw')})->match(1) + 1
-        let winid = win_getid(winnr)
+        syngroups = SYNTAX_GROUPS_HYPERTEXT
+    endif
+    return index(syngroups, SyntaxUnderCursor()) >= 0
+enddef
+
+def SyntaxUnderCursor(): string #{{{2
+    # twice because of a bug: https://github.com/vim/vim/issues/5252
+    var id: number = synID('.', col('.'), true)
+    id = synID('.', col('.'), true)
+    return synIDattr(id, 'name')
+enddef
+
+def PreviewGetid(): number #{{{2
+    var winid: number
+    if exists('+pvp') && &pvp != ''
+        winid = popup_findpreview()
+    else
+        var winnr: number = range(1, winnr('$'))
+            ->mapnew((_, v) => getwinvar(v, '&pvw'))->match(true) + 1
+        winid = win_getid(winnr)
     endif
     return winid
-endfu
+enddef
 
