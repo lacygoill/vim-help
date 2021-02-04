@@ -29,7 +29,7 @@ setl cms=
 " contains a hyphen (for an example, see `:h usr_05 /load-plugins`).
 " Warning:{{{
 "
-" If you customize `'isk'` further, make sure to update `s:restore_these()` in:
+" If you customize `'isk'` further, make sure to update `RestoreThese()` in:
 "
 "     ~/.vim/plugged/vim-session/plugin/session.vim
 "}}}

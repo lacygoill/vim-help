@@ -70,10 +70,10 @@ def help#jumpToTag(type: string, dir: string) #{{{2
     elseif type == 'hypertext'
         pat = PAT_HYPERTEXT
     endif
-    var find_sth: bool = search(pat, flags) != 0
+    var find_sth: bool = search(pat, flags) > 0
 
     while find_sth && !HasRightSyntax(type)
-        find_sth = search(pat, flags) != 0
+        find_sth = search(pat, flags) > 0
     endwhile
 
     if !HasRightSyntax(type)
