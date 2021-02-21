@@ -155,7 +155,8 @@ def PreviewGetid(): number #{{{2
         winid = popup_findpreview()
     else
         var winnr: number = range(1, winnr('$'))
-            ->mapnew((_, v) => getwinvar(v, '&pvw'))->match(true) + 1
+            ->mapnew((_, v: number): bool => getwinvar(v, '&pvw'))
+            ->match(true) + 1
         winid = win_getid(winnr)
     endif
     return winid
