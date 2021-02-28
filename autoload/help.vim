@@ -109,17 +109,17 @@ enddef
 # Core {{{1
 def HighlightTag() #{{{2
     var winid: number = PreviewGetid()
-    var matchid: number = getwinvar(winid, '_preview_tag', 0)
+    var matchid: number = getwinvar(winid, 'help_preview_tag', 0)
     if matchid != 0
         matchdelete(matchid, winid)
     endif
-    win_execute(winid, 'w:_tag_pos = getcurpos()')
+    win_execute(winid, 'w:help_tag_pos = getcurpos()')
     var lnum: number
     var col: number
-    [lnum, col] = getwinvar(winid, '_tag_pos')[1 : 2]
+    [lnum, col] = getwinvar(winid, 'help_tag_pos')[1 : 2]
     var pat: string = '\%' .. lnum .. 'l\%' .. col .. 'c\S\+'
-    var _preview_tag: number = matchadd('IncSearch', pat, 0, -1, {window: winid})
-    setwinvar(winid, '_preview_tag', _preview_tag)
+    var preview_tag: number = matchadd('IncSearch', pat, 0, -1, {window: winid})
+    setwinvar(winid, 'help_preview_tag', preview_tag)
 enddef
 
 def ClosePreview() #{{{2
